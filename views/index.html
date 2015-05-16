@@ -5,9 +5,21 @@
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
   <title>Fatman</title>
-  <script id="panel-init">
+  <script id="app-init">
 		$(function() {
 			$( "body>[data-role='panel']" ).panel();
+		});
+		$(document).ready(function() {
+		  $.ajaxSetup({ cache: true });
+		  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+		    FB.init({
+		      appId      : '1645169765701795',
+		      xfbml      : true,
+		      version    : 'v2.3'
+		    });     
+		    //$('#loginbutton,#feedbutton').removeAttr('disabled');
+		    //FB.getLoginStatus(updateStatusCallback);
+		  });
 		});
 	</script>
 </head>
@@ -19,7 +31,9 @@
 		</div><!-- /header -->
 
 		<div role="main" class="ui-content">
-			<p>Page content goes here.</p>
+			<div id = "facebook-login-btn">
+				<span>Login with facebook</span>
+			</div>
 		</div><!-- /content -->
 	</div><!-- /page -->
 	<div data-role="panel" id="menu-panel" data-position="right" data-display="reveal" data-theme="a">
