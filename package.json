@@ -9,6 +9,7 @@
   "author": "je",
   "license": "mit",
   "dependencies": {
+    "body-parser": "^1.12.4",
     "express": "^4.12.3",
     "request": "^2.55.0",
     "superagent": "^1.2.0"
