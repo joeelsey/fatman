@@ -8,12 +8,10 @@ app.use(bodyparser.urlencoded({
   }));
   app.use(bodyparser.json());
 
-
-app.get('/', function(req, res) {
-    res.json({
-      msg: 'hello world'
-    });
-  });
+app.use(express.static(__dirname + '/public'));
+app.get('/public', function(req, res) {
+  res.redirect('fatman.html');
+});
 
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function() {
