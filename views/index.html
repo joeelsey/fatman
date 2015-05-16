@@ -4,9 +4,40 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-  <title></title>
+  <title>Fatman</title>
+  <script id="app-init">
+		$(function() {
+			$( "body>[data-role='panel']" ).panel();
+		});
+		$(document).ready(function() {
+		  $.ajaxSetup({ cache: true });
+		  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+		    FB.init({
+		      appId      : '1645169765701795',
+		      xfbml      : true,
+		      version    : 'v2.3'
+		    });     
+		    //$('#loginbutton,#feedbutton').removeAttr('disabled');
+		    //FB.getLoginStatus(updateStatusCallback);
+		  });
+		});
+	</script>
 </head>
 <body>
-FATMAN FATMAN FATMAN
+	<div data-role="page" data-theme = "a">
+		<div data-role="header" data-theme = "b">
+			<h1>Fatman</h1>
+			<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+		</div><!-- /header -->
+
+		<div role="main" class="ui-content">
+			<div id = "facebook-login-btn">
+				<span>Login with facebook</span>
+			</div>
+		</div><!-- /content -->
+	</div><!-- /page -->
+	<div data-role="panel" id="menu-panel" data-position="right" data-display="reveal" data-theme="a">
+		<h3>Hello World</h3>	
+	</div>
 </body>
 </html>
