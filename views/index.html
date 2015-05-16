@@ -4,9 +4,26 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-  <title></title>
+  <title>Fatman</title>
+  <script id="panel-init">
+		$(function() {
+			$( "body>[data-role='panel']" ).panel();
+		});
+	</script>
 </head>
 <body>
-FATMAN FATMAN FATMAN
+	<div data-role="page" data-theme = "a">
+		<div data-role="header" data-theme = "b">
+			<h1>Fatman</h1>
+			<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+		</div><!-- /header -->
+
+		<div role="main" class="ui-content">
+			<p>Page content goes here.</p>
+		</div><!-- /content -->
+	</div><!-- /page -->
+	<div data-role="panel" id="menu-panel" data-position="right" data-display="reveal" data-theme="a">
+		<h3>Hello World</h3>	
+	</div>
 </body>
 </html>
