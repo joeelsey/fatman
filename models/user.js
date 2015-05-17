@@ -52,7 +52,7 @@ userSchema.methods.numberOfBeers = function(caloriesBurned) {
     if(err) console.debug(err);
     if(!data) console.debug("Data Error");
     console.log(data);
-  })
+  });
   return roundedBeers;
 };
 
