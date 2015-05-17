@@ -11,7 +11,7 @@ function User(currentUserData){
 	  date_of_birth: "",
 	  age: "",
 	  save: function(callback){
-	  	var requestData = $.extend( true, this, {} );
+	  	var requestData = $.extend( true, {} , this );
 	  	delete requestData.save;
 	  	delete requestData.getBeerData;
 			$.post('/users/info', requestData, callback);

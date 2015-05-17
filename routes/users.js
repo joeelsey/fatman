@@ -24,13 +24,13 @@ router.get('/beer/:facebook_uid', function(req, res) {
     if (!users) res.status(500).send('user error');
     if (users.lengt === 0) res.status(401).send("user error");
     var user = users[0];
-    var disatance = user.milesRan(req.body.hours, req.body.minutes);
+    var distance = user.milesRan(req.body.hours, req.body.minutes);
     var time = req.body.hours + (req.body.minutes/60);
     var caloriesBurned = user.caloriesBurnedByRunning(distance, time);
     var numberOfBeers = user.numberOfBeers(caloriesBurned);
     var beerData = {
       nutritionRating: user.nutritionRating(),
-      milesRan: disatance,
+      milesRan: distance,
       caloriesBurned: numberOfBeers,
       numberOfBeers: caloriesBurned
     };
@@ -66,10 +66,14 @@ router.post('/info', function(req, res) {
       user.name = req.body.name;
       user.sex = req.body.sex;
       user.weight = req.body.weight;
-      user.height = req.body.height;
+      var height = {
+        feet: req.body["height[feet]"],
+        inches: req.body["height[inches]"]
+      };
+      user.height = height;
       user.date_of_birth = req.body.date_of_birth;
-      var today = moment().format();
-      var age = moment(today, "YYYY M DD").diff(user.date_of_birth,"years");
+      var date = new Date(req.body.date_of_birth)
+      var age = moment().diff(date,"years");
       user.age = age.toString();
       console.log("user age", user.date_of_birth, age, user.age);
       user.dataSeted = true;
@@ -82,7 +86,9 @@ router.post('/info', function(req, res) {
           res.status(500).send('data error');
         }
         else{
-          res.json(data);
+          console.log("user1: ",data);
+          console.log("user2: ",user);
+          res.json(user);
         }
       });
     }
@@ -93,6 +99,7 @@ router.post('/signin', function(req, res){
   User.find(req.body.facebook_uid, function(err, users){
     if (err) res.status(500).send('error');
     if(!users || users.length === 0){
+      console.log("Creating new user!!");
       var user = new User();
       user.facebook_uid = req.body.facebook_uid;
       user.name = req.body.name;

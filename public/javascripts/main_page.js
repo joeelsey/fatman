@@ -58,6 +58,7 @@ $(document).ready(function(){
 		console.log("saving to backend...");
 		currentUser.save(function(data){
 			currentUser.dataSeted = data.dataSeted;
+			currentUser.age = data.age;
 			console.log("saved currentUser: ", currentUser);
 			$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 		});
