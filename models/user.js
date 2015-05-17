@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 
 var userSchema = mongoose.Schema({
+	facebook_uid: String,
   name: String,
   sex: String,
   weight: String,

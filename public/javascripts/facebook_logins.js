@@ -8,23 +8,39 @@ $(document).ready(function() {
     });     
     $('#fb-loging-btn').removeAttr('disabled');
   });
+
   $('#fb-loging-btn').on("click", function(e){
     e.preventDefault();
-    FB.getLoginStatus(function(response){
-      if (response.status === 'connected') {
-        // the user is logged in and has authenticated your
-        // app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed
-        // request, and the time the access token 
-        // and signed request each expire
-        var uid = response.authResponse.userID;
-        var accessToken = response.authResponse.accessToken;
-      } else if (response.status === 'not_authorized') {
-        // the user is logged in to Facebook, 
-        // but has not authenticated your app
-      } else {
-        // the user isn't logged in to Facebook.
+    function fatmanSignIn(facebookUid){
+      FB.api('/me', function(graphApiResponse) {
+        var user = {
+          facebook_uid: facebookUid,
+          name: graphApiResponse.name
+        };
+        console.log("Posting data: ",user);
+        $.post("/users/signin", user,function(data){
+          console.log("return data: ", data);
+          window.currentUser = new User(data);
+          console.log("User loged in!!!!");
+          console.log(window.currentUser);
+        })
+      });
+    }
+    FB.getLoginStatus( function(statusResponse){
+      if (statusResponse.status === 'connected') {
+        var facebookUid = statusResponse.authResponse.userID;
+        fatmanSignIn(facebookUid);
+      } 
+      else {
+        FB.login(function(loginResponse){
+          if (loginResponse.authResponse) {
+            var facebookUid = loginResponse.authResponse.userID;
+            fatmanSignIn(facebookUid);
+           } else {
+             console.log('User cancelled login or did not fully authorize.');
+           }
+        });
       }
     });
-  })
+  });
 });
