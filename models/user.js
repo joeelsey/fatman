@@ -31,8 +31,12 @@ userSchema.methods.nutritionRating = function() {
     var Women_REE = (9.99 * USER_WEIGHT) + (6.25 * USER_CM) - (4.92 * userSchema.age) - 161;
     nutritionRating = Women_REE;
   }
-
+  nutritionRating *= Number(userSchema.activity);
   return nutritionRating;
+};
+
+userSchema.methods.numberOfBeers = function(caloriesBurned) {
+  
 };
 
 module.exports = mongoose.model('User', userSchema);
