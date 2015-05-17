@@ -19,8 +19,8 @@ router.get('/info', function(req, res) {
 });
 
 //get user by id
-router.get('/info/:id', function(req, res) {
-  User.findById(req.params.id, function(err, data) {
+router.get('/info/:name', function(req, res) {
+  User.find(req.params.name, function(err, data) {
     if (err) res.status(500).send('error');
     if (!data) res.status(500).send('data error');
 
