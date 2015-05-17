@@ -4,3 +4,22 @@
 #main-content #logo{
 	width: 70%;
 }
+
+.fitness-donut {
+  text-align: center;
+}
+
+.fitness-donut h2{
+  text-align: center;
+  position: relative;
+  top: 50px;
+}
+
+.doughnut {
+  background-color: transparent;
+  border: 20px solid blue;
+  border-radius: 400px;
+  height:300px;
+  width:300px;
+  margin: 0 auto;
+}
