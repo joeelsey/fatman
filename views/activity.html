@@ -1,0 +1,24 @@
+<div id="activity" data-role="page" data-theme="a">
+  <div data-role="header" data-theme = "b">
+    <h1>Fatman</h1>
+    <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a>
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div class="ui-content">
+    <h1>CHOOSE YOUR LEVEL OF ACTIVITY</h1>
+    <select id="activity-level" onchange="activity(this.value)">
+      <option name="pickone">Level Of Activity</option>
+      <option name="sedentary" value="1.2">Sedentary (little or no exercise)</option>
+      <option name="lightly" value="1.375">Lightly active (light exercise/sports 1­3 days/week)</option>
+      <option name="moderate" value="1.55">Moderately active (moderate exercise/sports 3­5 days/week)</option>
+      <option name="very-active" value="1.725">Very active (hard exercise/sports 6­7 days a week)</option>
+      <option name="extra-active" value="1.95">Extra active (very hard exercise/sports & physical job or 2x/day training)</option>
+    </select>
+  </div>
+  <script type="text/javascript">
+    function activity(value) {
+      console.log(value);
+      return value;
+    }
+  </script>
+</div>
