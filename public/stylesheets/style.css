@@ -1,10 +1,33 @@
-#main-content #logo{
+#login-content #logo{
 	width: 70%;
 	margin-left: 15%;
 	margin-top: 20%;
 }
-#main-content #fb-loging-btn{
+#login-content #fb-loging-btn{
 	background-color: #3B5998;
 	color:#fff;
 	text-shadow: 0 0px 0 #fff;
+}
+#main-page #user-data{
+	margin: 0px;
+	width: 100%;
+}
+#run-content{
+	background-color: #D1D2D3;
+	color:#636363;
+	text-shadow: 0 0px 0 #fff;
+}
+#drink-content{
+	background-color: #6D6E71;
+	color:#B6B6B7;
+	text-shadow: 0 0px 0 #fff;
+}
+
+#user-beer-data{;
+	background-color: #414042;
+	color: #fff;
+	text-shadow: 0 0px 0 #fff;
+}
+#main-page .action{
+	padding: 35% 1em;
 }
