@@ -35,17 +35,22 @@
             .attr("fill", function(d, i) { return color(i); })
             .attr("d", arc);
 
-        var text = d3.select("g")
+        var beertext = d3.select("g")
                      .datum(dataset)
                      .append("text")
                      .attr("class", "text")
-                     .attr("transform", "translate(" + 0 + "," + 0 + ")")
+                     .attr("transform", "translate(" + -40 + "," + -30 + ")")
                      .text(function(p, i) {
-                        var labels, count;
-                        p.forEach(function(d) {
-                          return d.label;
-                        });
-                        return p[0].label + " " + p[1].label;
+                        return p[1].label + ":" + " " + p[1].count;
+                     })
+                     .style("text-align", "center");
+        var labeltext = d3.select("g")
+                     .datum(dataset)
+                     .append("text")
+                     .attr("class", "text")
+                     .attr("transform", "translate(" + -40 + "," + 10 + ")")
+                     .text(function(p, i) {
+                        return p[0].label + ":" + " " + p[0].count;
                      })
                      .style("text-align", "center");
 
