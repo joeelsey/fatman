@@ -41,6 +41,32 @@
   top: 50px;
 }
 
+.button {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.minute-button {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.svg {
+  position:fixed; 
+  top:0; 
+  left:0; 
+  height:100%; 
+  width:100%
+}
+
+h1 {
+  text-align: center;
+}
+
+.text {
+  text-align: center;
+  font-family: Arial Black;
+}
 /*.doughnut {
   background-color: transparent;
   border: 20px solid blue;

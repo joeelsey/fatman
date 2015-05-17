@@ -1,11 +1,16 @@
 <div id="fitness-donut" data-role="page" data-theme="a" class="fitness-donut">
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <div data-role="header" data-theme = "b">
     <h1>Fatman</h1>
     <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a>
     <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
   </div><!-- /header -->
-  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <div id="donut-chart" class="ui-content">
+  <div class="ui-content">
+      <h1>FITNESS LEVEL</h1>
+      <div id="donut-chart"></div>
+  </div>
+  <div data-role="footer" data-position="fixed"> 
+    <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
   </div>
     <script type="text/javascript">
         var dataset = [
@@ -13,8 +18,8 @@
           { label: 'miles', count: 20 }
         ];
 
-        var width = 500,
-            height = 500,
+        var width = 300,
+            height = 300,
             radius = Math.min(width, height) / 2;
 
         var color = d3.scale.category20();
@@ -24,12 +29,14 @@
             .sort(null);
 
         var arc = d3.svg.arc()
-            .innerRadius(radius - 100)
-            .outerRadius(radius - 90);
+            .innerRadius(radius - 50)
+            .outerRadius(radius - 20);
 
         var svg = d3.select("#donut-chart").append("svg")
             .attr("width", width)
             .attr("height", height)
+            .attr("viewBox", "0 0" + " " + height + " " + width)
+            .attr("preserveAspectRatio", "xMidYMid")
             .append("g")
             .attr("class", "donut")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
@@ -46,18 +53,30 @@
                      .attr("class", "text")
                      .attr("transform", "translate(" + -40 + "," + -30 + ")")
                      .text(function(p, i) {
-                        return p[1].label + ":" + " " + p[1].count;
+                        var str = p[1].label;
+                        return str.toUpperCase() + ":" + " " + p[1].count;
                      })
-                     .style("text-align", "center");
+                     .style("text-align", "center")
+                     .style("fill", "#333");
         var labeltext = d3.select("g")
                      .datum(dataset)
                      .append("text")
                      .attr("class", "text")
                      .attr("transform", "translate(" + -40 + "," + 10 + ")")
                      .text(function(p, i) {
-                        return p[0].label + ":" + " " + p[0].count;
+                        var str = p[0].label;
+                        return str.toUpperCase() + ":" + " " + p[0].count;
                      })
-                     .style("text-align", "center");
+                     .style("text-align", "center")
+                     .style("fill", "#333");
+
+        //resize chart to window
+        var aspect = 960 / 500, chart = $("#donut-chart");
+        $(window).on("resize", function() {
+            var targetWidth = chart.parent().width();
+            chart.attr("width", targetWidth);
+            chart.attr("height", targetWidth / aspect);
+});
 
     </script>
 </div>

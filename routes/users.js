@@ -58,7 +58,7 @@ router.post('/info', function(req, res) {
     user.height = req.body.height;
     user.date_of_birth = req.body.date_of_birth;
     user.age = moment().diff(user.date_of_birth, 'years');
-    user.dataSeted = true
+    user.dataSeted = true;
     user.save(function(err, data){
       if (err) res.status(500).send('error');
       if (!data) res.status(500).send('data error');
@@ -70,11 +70,11 @@ router.post('/info', function(req, res) {
 router.post('/signin', function(req, res){
   User.find(req.body.facebook_uid , "facebook_uid name", function(err, users){
     if (err) res.status(500).send('error');
-    if(!users || users.length == 0){
+    if(!users || users.length === 0){
       var user = new User();
       user.facebook_uid = req.body.facebook_uid;
       user.name = req.body.name;
-      user.dataSeted = false
+      user.dataSeted = false;
       user.save(function(err, data) {
         if (err) res.status(500).send('error');
         if (!data) res.status(500).send('data error');
