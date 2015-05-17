@@ -1,12 +1,16 @@
 <div id="fitness-donut" data-role="page" data-theme="a" class="fitness-donut">
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <div data-role="header" data-theme = "b">
     <h1>Fatman</h1>
     <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a>
     <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
   </div><!-- /header -->
-  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <div id="donut-chart" class="ui-content">
-  <h1>FITNESS LEVEL</h1>
+  <div class="ui-content">
+      <h1>FITNESS LEVEL</h1>
+      <div id="donut-chart"></div>
+  </div>
+  <div data-role="footer" data-position="fixed"> 
+    <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
   </div>
     <script type="text/javascript">
         var dataset = [
@@ -14,8 +18,8 @@
           { label: 'miles', count: 20 }
         ];
 
-        var width = 320,
-            height = 320,
+        var width = 300,
+            height = 300,
             radius = Math.min(width, height) / 2;
 
         var color = d3.scale.category20();
