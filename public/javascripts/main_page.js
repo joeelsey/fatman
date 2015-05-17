@@ -8,6 +8,24 @@ $(document).ready(function(){
 			$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 		}
 	});
+	$("#intro-btn").on("click", function(e){
+		e.preventDefault();
+		var male = $("#checkbox-v-2a").is(':checked');
+		var female = $("#checkbox-v-2b").is(':checked');
+		if(( male && !female ) || ( !male && female )){ //male xor female
+			if(male){
+				currentUser.sex = "Male"
+			}
+			else{
+				currentUser.sex = "Female"
+			}
+			console.log("currentUser: ", currentUser);
+			$.mobile.changePage( "#height", { transition: "slide", changeHash: false });
+		}
+		else{
+			alert("You must select one gender.")
+		}
+	})
 
 	$("#height-btn").on("click", function(e) {
 		e.preventDefault();
