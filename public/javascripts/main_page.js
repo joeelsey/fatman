@@ -33,7 +33,8 @@ $(document).ready(function(){
 			feet: $("#height-feet").val(),
     	inches: $("#height-inches").val()
 		}
-		currentUser.height = height
+		console.log("height: ", height);
+		currentUser.height = height;
 		console.log("currentUser: ", currentUser);
 		$.mobile.changePage( "#weight", { transition: "slide", changeHash: false });
 	});
@@ -50,12 +51,15 @@ $(document).ready(function(){
 		var day = $("#birthday-day").val();
 		var month = $("#birthday-month").val();
 		var year = $("#birthday-year").val();
-		currentUser.date_of_birth = day + "/" + month + "/" + year;
+		var date = year.toString() + " " + month.toString() + " " + day.toString();
+		console.log("Date: ", date);
+		currentUser.date_of_birth = date
 		console.log("currentUser: ", currentUser);
 		console.log("saving to backend...");
 		currentUser.save(function(data){
 			currentUser.dataSeted = data.dataSeted
 			console.log("saved currentUser: ", currentUser);
+			$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 		});
 	});
 

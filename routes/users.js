@@ -51,27 +51,45 @@ router.get('/info/:facebook_uid', function(req, res) {
 
 //store user info
 router.post('/info', function(req, res) {
-  User.find(req.body.facebook_uid, function(err, user){
-    if (err) res.status(500).send('error');
-    if (!user) res.status(500).send('data error');
-    user.facebook_uid = req.body.facebook_uid;
-    user.name = req.body.name;
-    user.sex = req.body.sex;
-    user.weight = req.body.weight;
-    user.height = req.body.height;
-    user.date_of_birth = req.body.date_of_birth;
-    user.age = moment().diff(user.date_of_birth, 'years');
-    user.dataSeted = true;
-    user.save(function(err, data){
-      if (err) res.status(500).send('error');
-      if (!data) res.status(500).send('data error');
-      res.json(data);
-    });
+  User.find(req.body.facebook_uid, function(err, users){
+    if (err){
+      console.log(err);
+      res.status(500).send('error');
+    } 
+    else if(!users){
+      res.status(500).send('data error');
+    }
+    else{
+      var user = users[0]
+      console.log("params sent: ",req.body);
+      user.facebook_uid = req.body.facebook_uid;
+      user.name = req.body.name;
+      user.sex = req.body.sex;
+      user.weight = req.body.weight;
+      user.height = req.body.height;
+      user.date_of_birth = req.body.date_of_birth;
+      var age = moment().diff(user.date_of_birth, 'years');
+      user.age = age.toString();
+      console.log("user age", user.date_of_birth, age, user.age);
+      user.dataSeted = true;
+      user.update(function(err, data){
+        if (err) {
+          console.log(err);
+          res.status(500).send('error');
+        }
+        else if(!data){
+          res.status(500).send('data error');
+        }
+        else{
+          res.json(data);
+        }
+      });
+    }
   });
 });
 
 router.post('/signin', function(req, res){
-  User.find(req.body.facebook_uid , "facebook_uid name", function(err, users){
+  User.find(req.body.facebook_uid, function(err, users){
     if (err) res.status(500).send('error');
     if(!users || users.length === 0){
       var user = new User();

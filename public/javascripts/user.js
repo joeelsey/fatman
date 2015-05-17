@@ -11,16 +11,21 @@ function User(currentUserData){
 	  date_of_birth: "",
 	  age: "",
 	  save: function(callback){
-			$.post('/users/info', this.userData, callback);
+	  	var requestData = $.extend( true, this, {} );
+	  	delete requestData.save;
+	  	delete requestData.getBeerData;
+			$.post('/users/info', requestData, callback);
 		},
 		getBeerData: function(callback){
-			var fbuid = this.userData.facebook_uid;
+			var fbuid = this.facebook_uid;
 			var that = this;
 			var runningData = {
-				hours: this.userData.hours,
-				minutes: this.userData.minutes
-			}
-			$.get("/users/beer/"+fbuid, runningData, function(data){
+				hours: this.hours,
+				minutes: this.minutes
+			};
+			var url = "/users/beer/" + fbuid;
+			console.log(url);
+			$.get(url, runningData, function(data){
 				that.beerData = data;
 				callback();
 			});
