@@ -1,52 +1,67 @@
 <div id="fitness-donut" data-role="page" data-theme="a" class="fitness-donut">
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script type="text/javascript">
-      (function(d3) {
-        'use strict';
-
+  <div id="donut-chart">
+  </div>
+    <script type="text/javascript">
         var dataset = [
-          { label: 'Abulia', count: 10 }, 
-          { label: 'Betelgeuse', count: 20 },
-          { label: 'Cantaloupe', count: 30 },
-          { label: 'Dijkstra', count: 40 }
+          { label: 'beers', count: 10 }, 
+          { label: 'miles', count: 20 }
         ];
 
-        var width = 360;
-        var height = 360;
-        var radius = Math.min(width, height) / 2;
-        var donutWidth = 75;                            // NEW
+        var width = 500,
+            height = 500,
+            radius = Math.min(width, height) / 2;
 
-        var color = d3.scale.category20b();
+        var color = d3.scale.category20();
 
-        var svg = d3.select('#chart')
-          .append('svg')
-          .attr('width', width)
-          .attr('height', height)
-          .append('g')
-          .attr('transform', 'translate(' + (width / 2) + 
-            ',' + (height / 2) + ')');
+        var pie = d3.layout.pie()
+            .value(function(d) { return d.count; })
+            .sort(null);
 
         var arc = d3.svg.arc()
-          .innerRadius(radius - donutWidth)             // NEW
-          .outerRadius(radius);
-          
-        var pie = d3.layout.pie()
-          .value(function(d) { return d.count; })
-          .sort(null);
+            .innerRadius(radius - 100)
+            .outerRadius(radius - 90);
 
-        var path = svg.selectAll('path')
-          .data(pie(dataset))
-          .enter()
-          .append('path')
-          .attr('d', arc)
-          .attr('fill', function(d, i) { 
-            return color(d.data.label);
-          });
+        var svg = d3.select("#donut-chart").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("class", "donut")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-      })(window.d3);
-  </script>
-  <div>FITNESS DONUT</div>
-  <div id="chart">
-    <h2>HOW MANY BEERS?</h2>
-  </div>
+        var path = svg.selectAll("path")
+            .data(pie(dataset))
+            .enter().append("path")
+            .attr("fill", function(d, i) { return color(i); })
+            .attr("d", arc);
+
+        var text = d3.select("g")
+                     .datum(dataset)
+                     .append("text")
+                     .attr("class", "text")
+                     .attr("transform", "translate(" + -40 + "," + 0 + ")")
+                     .text(function(p, i) {
+                        var labels, count;
+                        p.forEach(function(d) {
+                          return d.label;
+                        });
+                        return p[0].label + " " + p[1].label;
+                     })
+                     .style("text-align", "center");
+
+        // var center_group = svg.append("svg:center")
+        //     .attr("class", "ctrGroup")
+        //     .attr("transform", "translate(" + (w / 2) + "," + (h / 2) + ")")
+        //     .attr("width", "20px")
+        //     .attr("height", "20px")
+        //     .style("fill", "none");
+
+        // var pieLabel = center_group.append("svg:text")
+        //     .data(dataset)
+        //     .attr("dy", ".35em").attr("class", "chartLabel")
+        //     .attr("text-anchor", "middle")
+        //     .text("HELLO",function(d) {
+        //       return d.label;
+        //     });
+    </script>
 </div>
