@@ -1,28 +1,7 @@
 #login-content #logo{
 	width: 70%;
-  margin-left: 15%;
-  margin-top: 20%;
-}
-
-.fitness-donut {
-  text-align: center;
-}
-
-.fitness-donut h2{
-  text-align: center;
-  position: relative;
-  top: 50px;
-}
-
-/*.doughnut {
-  background-color: transparent;
-  border: 20px solid blue;
-  border-radius: 400px;
-  height:300px;
-  width:300px;
-  margin: 0 auto;
-}*/
-	
+	margin-left: 15%;
+	margin-top: 20%;
 }
 #login-content #fb-loging-btn{
 	background-color: #3B5998;
@@ -50,5 +29,23 @@
 	text-shadow: 0 0px 0 #fff;
 }
 #main-page .action{
-	padding: 35% 1em;
+	padding: 18% 1em;
 }
+.fitness-donut {
+  text-align: center;
+}
+
+.fitness-donut h2{
+  text-align: center;
+  position: relative;
+  top: 50px;
+}
+
+/*.doughnut {
+  background-color: transparent;
+  border: 20px solid blue;
+  border-radius: 400px;
+  height:300px;
+  width:300px;
+  margin: 0 auto;
+}*/
