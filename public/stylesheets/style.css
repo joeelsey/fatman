@@ -1,8 +1,7 @@
-#main-content {
-	background-color: #fff;
-}
 #main-content #logo{
 	width: 70%;
+  margin-left: 15%;
+  margin-top: 20%;
 }
 
 .fitness-donut {
@@ -23,3 +22,11 @@
   width:300px;
   margin: 0 auto;
 }*/
+	
+}
+#main-content #fb-loging-btn{
+	background-color: #3B5998;
+	color:#fff;
+	text-shadow: 0 0px 0 #fff;
+}
+
