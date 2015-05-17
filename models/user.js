@@ -12,7 +12,8 @@ var userSchema = mongoose.Schema({
     inches: String
   },
   date_of_birth: String,
-  age: String 
+  age: String,
+  dataSeted: Boolean
 
 });
 
