@@ -9,26 +9,25 @@ function User(currentUserData){
 	    inches: ""
 	  },
 	  date_of_birth: "",
-	  age: "" 
+	  age: "",
+	  save: function(callback){
+			$.post('/users/info', this.userData, callback);
+		},
+		getBeerData: function(callback){
+			var fbuid = this.userData.facebook_uid;
+			var that = this;
+			var runningData = {
+				hours: this.userData.hours,
+				minutes: this.userData.minutes
+			}
+			$.get("/users/beer/"+fbuid, runningData, function(data){
+				that.beerData = data;
+				callback();
+			});
+		}
 	}
 	for(userData in currentUserData){
 		this.userData[userData] = currentUserData[userData]
 	}
 	return this.userData
-}
-
-User.prototype.save = function(callback){
-	$.post('/info', this.userData, callback);
-}
-
-User.prototype.data = function(){
-	return this.userData;
-}
-
-User.prototype.getBeerData = function(callback){
-	var fbuid = this.userData.facebook_uid;
-	$.get("/beer/"+fbuid, function(data){
-		this.beerData = data;
-		callback();
-	});
 }
