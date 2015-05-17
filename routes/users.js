@@ -24,6 +24,7 @@ router.get('/beer/:facebook_uid', function(req, res) {
     if (!users) res.status(500).send('user error');
     if (users.lengt == 0) res.status(401).send("user error")
     var user = users[0];
+    var disatance = 
     var caloriesBurned = user.caloriesBurnedByRunning(req.body.distance, req.body.time);
     var numberOfBeers = user.numberOfBeers(caloriesBurned);
     var beerData = {

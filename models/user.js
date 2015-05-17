@@ -15,6 +15,7 @@ var userSchema = mongoose.Schema({
   age: String,
   dataSeted: Boolean,
   activity: String,
+  beers: String,
   coupons: []
 
 });
@@ -39,6 +40,12 @@ userSchema.methods.nutritionRating = function() {
 userSchema.methods.numberOfBeers = function(caloriesBurned) {
   var decimalBeers = caloriesBurned/BEER_CALORIES;
   var roundedBeers = Math.round( decimalBeers * 10 ) / 10;
+  userSchema.beers = roundedBeers.toString();
+  userSchema.save(function(err, data){
+    if(err) console.debug(err);
+    if(!data) console.debug("Data Error");
+    console.log(data);
+  })
   return roundedBeers;
 };
 
@@ -51,7 +58,7 @@ userSchema.methods.caloriesBurnedByRunning = function (distance,time) {
   var knownSpeeds = [4,5,5.2,6,6.7,7,7.5,8,8.6,9,10,11,12,13,14];
   var speed = (distance/time);
   var roundedSpeed = closestSpeed(speed);
-  var weight = Number(userSchema.weight);
+  var weight = Number(userSchema.weight * 0.45359237);
   met = getMet(roundedSpeed);
   calories = cckg(weight,met,time);
   
