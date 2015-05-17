@@ -18,6 +18,25 @@ router.get('/info', function(req, res) {
   });
 });
 
+router.get('/beer/:facebook_uid', function(req, res) {
+  User.find(req.params.facebook_uid, function(err, users) {
+    if (err) res.status(500).send('error');
+    if (!users) res.status(500).send('user error');
+    if (users.lengt == 0) res.status(401).send("user error")
+    var user = users[0];
+    var caloriesBurned = user.caloriesBurnedByRunning(req.body.distance, req.body.time);
+    var numberOfBeers = user.numberOfBeers(caloriesBurned);
+    var beerData = {
+      nutritionRating: user.nutritionRating(),
+      numberOfBeers: caloriesBurned,
+      caloriesBurned: numberOfBeers
+    };
+    res.json(beerData);
+  });
+});
+
+
+
 //get user by id
 router.get('/info/:facebook_uid', function(req, res) {
   User.find(req.params.facebook_uid, function(err, data) {
