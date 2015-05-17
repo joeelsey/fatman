@@ -13,6 +13,7 @@
     <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
   </div>
     <script type="text/javascript">
+        var userBeers, userMiles;
         var dataset = [
           { label: 'beers', count: 10 }, 
           { label: 'miles', count: 20 }
@@ -71,7 +72,7 @@
                      .style("fill", "#333");
 
         //resize chart to window
-        var aspect = 960 / 500, chart = $("#donut-chart");
+        var aspect = height / width, chart = $("#donut-chart");
         $(window).on("resize", function() {
             var targetWidth = chart.parent().width();
             chart.attr("width", targetWidth);
