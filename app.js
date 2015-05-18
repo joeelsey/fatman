@@ -12,7 +12,7 @@ var app = express();
 var mongoose = require('mongoose');
 
 // heroku connect
-var url = process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost:3000';
+var url = process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/fatman_dev';
 mongoose.connect(url);
 
 //local connect
