@@ -48,7 +48,7 @@ userSchema.methods.numberOfBeers = function(caloriesBurned) {
   var decimalBeers = caloriesBurned/BEER_CALORIES;
   var roundedBeers = Math.round( decimalBeers * 10 ) / 10;
   userSchema.beers = roundedBeers.toString();
-  userSchema.save(function(err, data){
+  this.update(function(err, data){
     if(err) console.debug(err);
     if(!data) console.debug("Data Error");
     console.log(data);
