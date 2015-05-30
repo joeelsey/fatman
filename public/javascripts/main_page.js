@@ -56,10 +56,14 @@ $(document).ready(function(){
 		currentUser.date_of_birth = date;
 		console.log("currentUser: ", currentUser);
 		console.log("saving to backend...");
-		currentUser.save(function(data){
-			currentUser.dataSeted = data.dataSeted;
-			currentUser.age = data.age;
-			console.log("saved currentUser: ", currentUser);
+		currentUser.save(function(err, data){
+			if (err) {
+				console.log('did not save data', err);
+			} else {
+				currentUser.dataSeted = data.dataSeted;
+				currentUser.age = data.age;
+				console.log("saved currentUser: ", currentUser);
+			}
 			$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 		});
 	});
@@ -71,8 +75,15 @@ $(document).ready(function(){
 		console.log("currentUser: ", currentUser);
 		currentUser.getBeerData(function(){
 			console.log("currentUser with beer: ", currentUser);
-			$.mobile.changePage( "#fitness-donut", { transition: "slide", changeHash: false });
+			$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 		});
 	});
 
-})
+	$("#activity-btn").on("click", function(e) {
+		e.preventDefault();
+		currentUser.activity = $("#select-native-1").val();
+		console.log("currentUser activity level", currentUser.activity);
+		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false});
+	});
+
+});
