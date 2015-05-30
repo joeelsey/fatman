@@ -64,8 +64,8 @@ $(document).ready(function(){
 				currentUser.age = data.age;
 				console.log("saved currentUser: ", currentUser);
 			}
-			$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 		});
+		$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 	});
 
 	$("#run-btn").on("click", function(e){
@@ -75,14 +75,18 @@ $(document).ready(function(){
 		console.log("currentUser: ", currentUser);
 		currentUser.getBeerData(function(){
 			console.log("currentUser with beer: ", currentUser);
-			$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 		});
+		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
 
 	$("#activity-btn").on("click", function(e) {
 		e.preventDefault();
-		currentUser.activity = $("#select-native-1").val();
-		console.log("currentUser activity level", currentUser.activity);
+		var activity = {
+			activityValue: $("#select-native-1").val(),
+			activityLevel: $("#select-native-1").children(":selected").attr('name')
+		};
+		currentUser.activity = activity;
+		console.log("currentUser activity level", currentUser.activity.activityValue, currentUser.activity.activityLevel);
 		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false});
 	});
 

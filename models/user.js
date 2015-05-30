@@ -14,7 +14,10 @@ var userSchema = mongoose.Schema({
   date_of_birth: String,
   age: String,
   dataSeted: Boolean,
-  activity: String,
+  activity: {
+    activityLevel: String,
+    activityValue: String
+  },
   beers: String,
   miles: String,
   coupons: []
