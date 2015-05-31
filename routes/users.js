@@ -58,9 +58,10 @@ router.post('/info', function(req, res) {
       res.status(500).send('data error');
     }
     else{
+      console.log("USERS", users[0]);
       var user = users[0];
       console.log("params sent: ",req.body);
-      user.facebook_uid = req.body.facebook_uid;
+      user.facebook_uid = req.body.facebook_uid || 1;
       user.name = req.body.name;
       user.sex = req.body.sex;
       user.weight = req.body.weight;
@@ -70,10 +71,13 @@ router.post('/info', function(req, res) {
       };
       user.height = height;
       user.date_of_birth = req.body.date_of_birth;
-      var date = new Date(req.body.date_of_birth);
-      var age = moment().diff(date,"years");
-      user.age = age.toString();
-      console.log("user age", user.date_of_birth, age, user.age);
+      user.age = user.userAge(req.body.date_of_birth);
+      console.log("user age", user.date_of_birth, user.age);
+      user.miles = user.milesRan(req.body.hours, req.body.minutes);
+      user.activity = {
+        activityLevel: req.body.activityLevel,
+        activityValue: req.body.activityValue
+      };
       user.dataSeted = true;
       user.update(function(err, data){
         if (err) {
@@ -99,7 +103,7 @@ router.post('/signin', function(req, res){
     if(!users || users.length === 0){
       console.log("Creating new user!!");
       var user = new User();
-      user.facebook_uid = req.body.facebook_uid;
+      user.facebook_uid = req.body.facebook_uid || 1;
       user.name = req.body.name;
       user.dataSeted = false;
       user.save(function(err, data) {

@@ -36,13 +36,16 @@ $(document).ready(function(){
 		console.log("height: ", height);
 		currentUser.height = height;
 		console.log("currentUser: ", currentUser);
+		$("#user-height").append("<span>Height: " + currentUser.height.feet + " " + currentUser.height.inches + " " + "</span>");
 		$.mobile.changePage( "#weight", { transition: "slide", changeHash: false });
 	});
 
 	$("#weight-btn").on("click", function(e){
 		e.preventDefault(); 
 		currentUser.weight = $("#weight-lbs").val();
+		console.log("weight: ", currentUser.weight);
 		console.log("currentUser: ", currentUser);
+		$("#user-weight").append("<span>Weight: " + currentUser.weight + "</span>");
 		$.mobile.changePage( "#birthday", { transition: "slide", changeHash: false });
 	});
 
@@ -54,6 +57,12 @@ $(document).ready(function(){
 		var date = year.toString() + " " + month.toString() + " " + day.toString();
 		console.log("Date: ", date);
 		currentUser.date_of_birth = date;
+
+	  var birthdate = new Date(date);
+	  var age = moment().diff(birthdate,"years");
+	  currentUser.age = age.toString();
+	  console.log('age', currentUser.age);
+
 		console.log("currentUser: ", currentUser);
 		console.log("saving to backend...");
 		currentUser.save(function(err, data){
@@ -65,6 +74,7 @@ $(document).ready(function(){
 				console.log("saved currentUser: ", currentUser);
 			}
 		});
+		$("#user-age").append("<span>Age: " + currentUser.age + "</span>");
 		$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 	});
 
@@ -98,4 +108,9 @@ $(document).ready(function(){
 		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false});
 	});
 
+	if($("#fitness-donut").length > 0){
+    $(document).ready(function(){
+    	console.log("FITTTTNNEESSSSS DONUUUUTTTTT!!!!!!");
+    });
+	}
 });

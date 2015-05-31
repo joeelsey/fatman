@@ -10,6 +10,12 @@ function User(currentUserData){
 	  },
 	  date_of_birth: "",
 	  age: "",
+	  activity: {
+    	activityLevel: "",
+    	activityValue: ""
+  	},
+	  beers: "",
+    miles: "",
 	  save: function(callback){
 	  	var requestData = $.extend( true, {} , this );
 	  	delete requestData.save;
