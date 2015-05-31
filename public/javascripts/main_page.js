@@ -79,6 +79,14 @@ $(document).ready(function(){
 		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
 
+	$("#beer-btn").on("click", function(e) {
+		e.preventDefault();
+		currentUser.beers = $("#beers-drank").val();
+		console.log("currentUser: ", currentUser);
+
+		$.mobile.changePage("#activity", { transition: "slide", changeHash: false });
+	});
+
 	$("#activity-btn").on("click", function(e) {
 		e.preventDefault();
 		var activity = {

@@ -30,9 +30,9 @@ function User(currentUserData){
 				callback();
 			});
 		}
+	};
+	for(var userData in currentUserData){
+		this.userData[userData] = currentUserData[userData];
 	}
-	for(userData in currentUserData){
-		this.userData[userData] = currentUserData[userData]
-	}
-	return this.userData
+	return this.userData;
 }
