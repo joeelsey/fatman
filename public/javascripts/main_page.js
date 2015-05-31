@@ -36,7 +36,7 @@ $(document).ready(function(){
 		console.log("height: ", height);
 		currentUser.height = height;
 		console.log("currentUser: ", currentUser);
-		$("#user-height").append("<span>Height: " + currentUser.height.feet + " " + currentUser.height.inches + " " + "</span>");
+		$("#user-height").append("<span>" + currentUser.height.feet + " " + currentUser.height.inches + " " + "</span>");
 		$.mobile.changePage( "#weight", { transition: "slide", changeHash: false });
 	});
 
@@ -45,7 +45,7 @@ $(document).ready(function(){
 		currentUser.weight = $("#weight-lbs").val();
 		console.log("weight: ", currentUser.weight);
 		console.log("currentUser: ", currentUser);
-		$("#user-weight").append("<span>Weight: " + currentUser.weight + "</span>");
+		$("#user-weight").append("<span>" + currentUser.weight + "</span>");
 		$.mobile.changePage( "#birthday", { transition: "slide", changeHash: false });
 	});
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
 				console.log("saved currentUser: ", currentUser);
 			}
 		});
-		$("#user-age").append("<span>Age: " + currentUser.age + "</span>");
+		$("#user-age").append("<span>" + currentUser.age + "</span>");
 		$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 	});
 
@@ -105,6 +105,7 @@ $(document).ready(function(){
 		};
 		currentUser.activity = activity;
 		console.log("currentUser activity level", currentUser.activity.activityValue, currentUser.activity.activityLevel);
+		$("#user-activity").append("<span>" + currentUser.activity.activityLevel + "</span>");
 		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false});
 	});
 
