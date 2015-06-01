@@ -61,7 +61,6 @@ $(document).ready(function(){
 	  var birthdate = new Date(date);
 	  var age = moment().diff(birthdate,"years");
 	  currentUser.age = age.toString();
-	  console.log('age', currentUser.age);
 
 		console.log("currentUser: ", currentUser);
 		console.log("saving to backend...");
@@ -86,6 +85,15 @@ $(document).ready(function(){
 		currentUser.getBeerData(function(){
 			console.log("currentUser with beer: ", currentUser);
 		});
+		var miles = function() {
+			var totalTime = currentUser.hours + (currentUser.minutes / 60);
+  		//Eight is avg speed of a running human.
+  		var miles = 8 * totalTime;
+  		return miles.toFixed(2);
+		};
+		currentUser.miles = miles();
+		$(".miles-text").text("Miles: " + currentUser.miles);
+		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
 
@@ -93,7 +101,8 @@ $(document).ready(function(){
 		e.preventDefault();
 		currentUser.beers = $("#beers-drank").val();
 		console.log("currentUser: ", currentUser);
-
+		$(".miles-text").text("Miles: " + currentUser.miles);
+		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage("#activity", { transition: "slide", changeHash: false });
 	});
 
@@ -108,10 +117,4 @@ $(document).ready(function(){
 		$("#user-activity").append("<span>" + currentUser.activity.activityLevel + "</span>");
 		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false});
 	});
-
-	if($("#fitness-donut").length > 0){
-    $(document).ready(function(){
-    	console.log("FITTTTNNEESSSSS DONUUUUTTTTT!!!!!!");
-    });
-	}
 });
