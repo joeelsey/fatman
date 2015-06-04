@@ -22,7 +22,7 @@ router.get('/beer/:facebook_uid', function(req, res) {
   User.find(req.params.facebook_uid, function(err, users) {
     if (err) res.status(500).send('error');
     if (!users) res.status(500).send('user error');
-    if (users.lengt === 0) res.status(401).send("user error");
+    if (users.length === 0) res.status(401).send("user error");
     var user = users[0];
     var distance = user.milesRan(req.body.hours, req.body.minutes);
     var time = req.body.hours + (req.body.minutes/60);
@@ -37,8 +37,6 @@ router.get('/beer/:facebook_uid', function(req, res) {
     res.json(beerData);
   });
 });
-
-
 
 //get user by id
 router.get('/info/:facebook_uid', function(req, res) {
@@ -60,9 +58,10 @@ router.post('/info', function(req, res) {
       res.status(500).send('data error');
     }
     else{
+      console.log("USERS", users[0]);
       var user = users[0];
       console.log("params sent: ",req.body);
-      user.facebook_uid = req.body.facebook_uid;
+      user.facebook_uid = req.body.facebook_uid || 1;
       user.name = req.body.name;
       user.sex = req.body.sex;
       user.weight = req.body.weight;
@@ -72,10 +71,13 @@ router.post('/info', function(req, res) {
       };
       user.height = height;
       user.date_of_birth = req.body.date_of_birth;
-      var date = new Date(req.body.date_of_birth)
-      var age = moment().diff(date,"years");
-      user.age = age.toString();
-      console.log("user age", user.date_of_birth, age, user.age);
+      user.age = user.userAge(req.body.date_of_birth);
+      console.log("user age", user.date_of_birth, user.age);
+      user.miles = user.milesRan(req.body.hours, req.body.minutes);
+      user.activity = {
+        activityLevel: req.body.activityLevel,
+        activityValue: req.body.activityValue
+      };
       user.dataSeted = true;
       user.update(function(err, data){
         if (err) {
@@ -101,7 +103,7 @@ router.post('/signin', function(req, res){
     if(!users || users.length === 0){
       console.log("Creating new user!!");
       var user = new User();
-      user.facebook_uid = req.body.facebook_uid;
+      user.facebook_uid = req.body.facebook_uid || 1;
       user.name = req.body.name;
       user.dataSeted = false;
       user.save(function(err, data) {
@@ -113,12 +115,11 @@ router.post('/signin', function(req, res){
       });
     }
     else{
-      var user = users[0]
-      console.log("Found User: ", user);
-      res.json(user);
+      users = users[0];
+      console.log("Found User: ", users);
+      res.json(users);
     }
   });
 });
-
 
 module.exports = router;
