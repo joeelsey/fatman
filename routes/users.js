@@ -48,22 +48,52 @@ router.get('/info/:facebook_uid', function(req, res) {
 
 //store user info
 router.post('/info', function(req, res) {
-  User.find(req.body.facebook_uid, function(err, user){
-    if (err) res.status(500).send('error');
-    if (!user) res.status(500).send('data error');
-    user.facebook_uid = req.body.facebook_uid;
-    user.name = req.body.name;
-    user.sex = req.body.sex;
-    user.weight = req.body.weight;
-    user.height = req.body.height;
-    user.date_of_birth = req.body.date_of_birth;
-    user.age = moment().diff(user.date_of_birth, 'years');
-    user.dataSeted = true;
-    user.save(function(err, data){
-      if (err) res.status(500).send('error');
-      if (!data) res.status(500).send('data error');
-      res.json(data);
-    });
+  User.find(req.body.facebook_uid, function(err, users){
+    if (err){
+      console.log(err);
+      res.status(500).send('error');
+    } 
+    else if(!users){
+      res.status(500).send('data error');
+    }
+    else{
+      console.log("USERS", users[0]);
+      var user = users[0];
+      console.log("params sent: ",req.body);
+      user.facebook_uid = req.body.facebook_uid || 1;
+      user.name = req.body.name;
+      user.sex = req.body.sex;
+      user.weight = req.body.weight;
+      var height = {
+        feet: req.body["height[feet]"],
+        inches: req.body["height[inches]"]
+      };
+      user.height = height;
+      user.date_of_birth = req.body.date_of_birth;
+      user.age = user.userAge(req.body.date_of_birth);
+      console.log("user age", user.date_of_birth, user.age);
+      user.miles = user.milesRan(req.body.hours, req.body.minutes);
+      user.activity = {
+        activityLevel: req.body.activityLevel,
+        activityValue: req.body.activityValue
+      };
+
+      user.dataSeted = true;
+      user.update(function(err, data){
+        if (err) {
+          console.log(err);
+          res.status(500).send('error');
+        }
+        else if(!data){
+          res.status(500).send('data error');
+        }
+        else{
+          console.log("user1: ",data);
+          console.log("user2: ",user);
+          res.json(user);
+        }
+      });
+    }
   });
 });
 
