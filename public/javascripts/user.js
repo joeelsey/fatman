@@ -11,10 +11,20 @@ function User(currentUserData){
 	  date_of_birth: "",
 	  age: "",
 	  save: function(callback){
-	  	var requestData = $.extend( true, {} , this );
-	  	delete requestData.save;
-	  	delete requestData.getBeerData;
+	  	var requestData = this.getRequestData();
 			$.post('/users/info', requestData, callback);
+		},
+		getRequestData: function(){
+			var requestData = {
+	  		facebook_uid: this.facebook_uid,
+			  name: this.name,
+			  sex: this.sex,
+			  weight: this.weight,
+			  height: this.height,
+			  date_of_birth: this.date_of_birth,
+			  age: this.age,
+	  	};
+	  	return requestData;
 		},
 		getBeerData: function(callback){
 			var fbuid = this.facebook_uid;
