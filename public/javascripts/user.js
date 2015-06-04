@@ -17,10 +17,10 @@ function User(currentUserData){
 	  beers: "",
     miles: "",
 	  save: function(callback){
+	  	// delete requestData.save;
+	  	// delete requestData.getBeerData;
 	  	var requestData = $.extend( true, {} , this );
-	  	delete requestData.save;
-	  	delete requestData.getBeerData;
-			$.post('/users/info', requestData, callback);
+			$.post('/users/info', this, callback);
 		},
 		getBeerData: function(callback){
 			var fbuid = this.facebook_uid;

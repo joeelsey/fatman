@@ -8,6 +8,14 @@ $(document).ready(function(){
 			$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 		}
 	});
+	$("#drink-content").on("click", function(e) {
+		e.preventDefault();
+		if(!currentUser.dataSeted) {
+			$.mobile.changePage("#intro", { transition: "slide", changeHash: false});
+		} else {
+			$.mobile.changePage( "#beers", {transition: "slide", changeHash: false});
+		}
+	});
 	$("#intro-btn").on("click", function(e){
 		e.preventDefault();
 		var male = $("#checkbox-v-2a").is(':checked');
@@ -62,19 +70,8 @@ $(document).ready(function(){
 	  var age = moment().diff(birthdate,"years");
 	  currentUser.age = age.toString();
 
-		console.log("currentUser: ", currentUser);
-		console.log("saving to backend...");
-		currentUser.save(function(err, data){
-			if (err) {
-				console.log('did not save data', err);
-			} else {
-				currentUser.dataSeted = data.dataSeted;
-				currentUser.age = data.age;
-				console.log("saved currentUser: ", currentUser);
-			}
-		});
 		$("#user-age").append("<span>" + currentUser.age + "</span>");
-		$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
+		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
 
 	$("#run-btn").on("click", function(e){
@@ -94,7 +91,7 @@ $(document).ready(function(){
 		currentUser.miles = miles();
 		$(".miles-text").text("Miles: " + currentUser.miles);
 		$(".beer-text").text("Beers: " + currentUser.beers);
-		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
+		$.mobile.changePage( "#fitness-donut", { transition: "slide", changeHash: false });
 	});
 
 	$("#beer-btn").on("click", function(e) {
@@ -103,7 +100,7 @@ $(document).ready(function(){
 		console.log("currentUser: ", currentUser);
 		$(".miles-text").text("Miles: " + currentUser.miles);
 		$(".beer-text").text("Beers: " + currentUser.beers);
-		$.mobile.changePage("#activity", { transition: "slide", changeHash: false });
+		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false });
 	});
 
 	$("#activity-btn").on("click", function(e) {
@@ -114,7 +111,18 @@ $(document).ready(function(){
 		};
 		currentUser.activity = activity;
 		console.log("currentUser activity level", currentUser.activity.activityValue, currentUser.activity.activityLevel);
+		console.log("currentUser: ", currentUser);
+		console.log("saving to backend...");
+		currentUser.save(function(err, data){
+			if (err) {
+				console.log('did not save data', err);
+			} else {
+				currentUser.dataSeted = data.dataSeted;
+				currentUser.age = data.age;
+				console.log("saved currentUser: ", currentUser);
+			}
+		});
 		$("#user-activity").append("<span>" + currentUser.activity.activityLevel + "</span>");
-		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false});
+		$.mobile.changePage("#run", { transition: "slide", changeHash: false});
 	});
 });

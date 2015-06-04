@@ -61,7 +61,7 @@ router.post('/info', function(req, res) {
       console.log("USERS", users[0]);
       var user = users[0];
       console.log("params sent: ",req.body);
-      user.facebook_uid = req.body.facebook_uid || 1;
+      user.facebook_uid = req.body.facebook_uid;
       user.name = req.body.name;
       user.sex = req.body.sex;
       user.weight = req.body.weight;
