@@ -97,6 +97,29 @@ router.post('/info', function(req, res) {
   });
 });
 
+router.put('/info/:facebook_uid', function(req, res) {
+  User.find(req.body.facebook_uid, function(err, user) {
+    if (err) return res.status(500).send('err', err);
+    if (!user) return res.status(500).send({msg: "user not found"});
+
+      user.sex = req.body.sex;
+      user.weight = req.body.weight;
+      var height = {
+        feet: req.body["height[feet]"],
+        inches: req.body["height[inches]"]
+      };
+      user.height = height;
+      user.date_of_birth = req.body.date_of_birth;
+      // user.age = user.userAge(req.body.date_of_birth);
+      // user.miles = user.milesRan(req.body.hours, req.body.minutes);
+      user.activity = {
+        activityLevel: req.body.activityLevel,
+        activityValue: req.body.activityValue
+      };
+      user.dataSeted = true;
+  });
+});
+
 router.post('/signin', function(req, res){
   User.find(req.body.facebook_uid, function(err, users){
     if (err) res.status(500).send('error');
