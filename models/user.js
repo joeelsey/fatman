@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var moment = require('moment');
 var BEER_CALORIES = 200;
 
 var userSchema = mongoose.Schema({
@@ -14,11 +15,20 @@ var userSchema = mongoose.Schema({
   date_of_birth: String,
   age: String,
   dataSeted: Boolean,
-  activity: String,
+  activity: {
+    activityLevel: String,
+    activityValue: String
+  },
   beers: String,
   miles: String,
   coupons: []
 });
+
+userSchema.methods.userAge = function(birthday) {
+  var date = new Date(birthday);
+  var age = moment().diff(date,"years");
+  return age.toString();
+};
 
 userSchema.methods.nutritionRating = function() {
   var USER_CM = (userSchema.height / 0.032808) + (userSchema.inches * 2.54);

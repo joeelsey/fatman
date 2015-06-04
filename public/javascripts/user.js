@@ -10,6 +10,12 @@ function User(currentUserData){
 	  },
 	  date_of_birth: "",
 	  age: "",
+	  activity: {
+    	activityLevel: "",
+    	activityValue: ""
+  	},
+	  beers: "",
+    miles: "",
 	  save: function(callback){
 	  	var requestData = this.getRequestData();
 			$.post('/users/info', requestData, callback);
@@ -40,9 +46,9 @@ function User(currentUserData){
 				callback();
 			});
 		}
+	};
+	for(var userData in currentUserData){
+		this.userData[userData] = currentUserData[userData];
 	}
-	for(userData in currentUserData){
-		this.userData[userData] = currentUserData[userData]
-	}
-	return this.userData
+	return this.userData;
 }

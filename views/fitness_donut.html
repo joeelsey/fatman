@@ -9,6 +9,12 @@
       <h1>FITNESS LEVEL</h1>
       <div id="donut-chart"></div>
   </div>
+  <div>
+      <p><span id="user-height">Height: </span></p>
+      <p><span id="user-weight">Weight: </span></p>
+      <p><span id="user-age">Age: </span></p>
+      <p><span id="user-activity">Activty: </span></p>
+  </div>
   <div data-role="footer" data-position="fixed"> 
     <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
   </div>
@@ -16,13 +22,16 @@
         var userBeers, userMiles;
         window.currentUser = new User({});
         currentUser.beerData = {
-            numberOfBeers: 10,
-            milesRan: 20
+            numberOfBeers: window.currentUser.beers || 0,
+            milesRan: window.currentUser.miles || 0
         }
         var dataset = [
           { label: 'beers', count: Math.round(currentUser.beerData.numberOfBeers) }, 
-          { label: 'miles', count: Math.round(currentUser.beerData.milesRan) }
+          { label: 'miles', count: Math.round(currentUser.beerData.milesRan) },
+          { label: 'empty', count: 100}
         ];
+
+        console.log("DATASET", dataset);
 
         var width = 300,
             height = 300,
@@ -56,7 +65,8 @@
         var beertext = d3.select("g")
                      .datum(dataset)
                      .append("text")
-                     .attr("class", "text")
+                     .attr("class", "beer-text")
+                     .attr("id", "beer-text")
                      .attr("transform", "translate(" + -40 + "," + -30 + ")")
                      .text(function(p, i) {
                         var str = p[1].label;
@@ -64,10 +74,11 @@
                      })
                      .style("text-align", "center")
                      .style("fill", "#333");
-        var labeltext = d3.select("g")
+        var milestext = d3.select("g")
                      .datum(dataset)
                      .append("text")
-                     .attr("class", "text")
+                     .attr("class", "miles-text")
+                     .attr("id", "miles-text")
                      .attr("transform", "translate(" + -40 + "," + 10 + ")")
                      .text(function(p, i) {
                         var str = p[0].label;
@@ -82,6 +93,7 @@
             var targetWidth = chart.parent().width();
             chart.attr("width", targetWidth);
             chart.attr("height", targetWidth / aspect);
+
 });
 
     </script>
