@@ -22,12 +22,14 @@ $(document).ready(function() {
           if (data.length === 0) {
             $.post('/users/signin', user, function(data) {
               console.log("new user created: ", data);
+              window.currentUser = data[0];
               $('#main-page #user-name').text(user.name + "EARNED: ");
               $('#main-page #user-beer').text("0");
               $.mobile.changePage( "#main-page", { transition: "slide", changeHash: false });
             });
           } else {
             console.log("user found: ", data[0]);
+            window.currentUser = data[0];
             $('#main-page #user-name').text(user.name + "EARNED: ");
             $('#main-page #user-name').text(user.beers + "EARNED: ");
             $.mobile.changePage( "#main-page", { transition: "slide", changeHash: false });
