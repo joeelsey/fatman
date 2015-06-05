@@ -17,15 +17,21 @@ $(document).ready(function() {
           facebook_uid: facebookUid,
           name: graphApiResponse.name
         };
-        console.log("Posting data: ",user);
-        $.post("/users/signin", user,function(data){
-          console.log("return data: ", data);
-          window.currentUser = new User(data);
-          var name = currentUser.name.split(" ")[0];
-          var numberBeers = currentUser.beers || 0;
-          $("#main-page #user-name").text(name + " EARNED: ");
-          $("#main-page #user-beer").text(numberBeers);
-          $.mobile.changePage( "#main-page", { transition: "slide", changeHash: false });
+        console.log("Posting data: ", user);
+        $.get("/users/info/" + user.facebook_uid, function(data) {
+          if (!data) {
+            $.post('/users/signin', user, function(data) {
+              console.log("return data: ", data[0]);
+              $('#main-page #user-name').text(user.name + "EARNED: ");
+              $('#main-page #user-beer').text("0");
+              $.mobile.changePage( "#main-page", { transition: "slide", changeHash: false });
+            });
+          } else {
+            console.log("return data: ", data[0]);
+            $('#main-page #user-name').text(user.name + "EARNED: ");
+            $('#main-page #user-name').text(user.beers + "EARNED: ");
+            $.mobile.changePage( "#main-page", { transition: "slide", changeHash: false });
+          }
         });
       });
     }
