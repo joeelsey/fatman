@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	//button on click events update the user information on the front end and back.
+
 	$("#run-content").on("click", function(e){
 		e.preventDefault();
 		if(!currentUser.dataSeted){

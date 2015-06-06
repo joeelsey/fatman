@@ -89,8 +89,9 @@ router.put('/info/:facebook_uid', function(req, res) {
       user.date_of_birth = req.body.date_of_birth;
       user.age = req.body.age;
       user.miles = req.body.miles;
-      user.activity.activityLevel = req.body.activityLevel;
-      user.activity.activityValue = req.body.activityValue;
+      user.beers = req.body.beers;
+      user.activity.activityLevel = req.body.activity.activityLevel;
+      user.activity.activityValue = req.body.activity.activityValue;
       user.dataSeted = true;
       console.log('REQ BODY', req.body.activity);
       user.save(function(err, data) {
