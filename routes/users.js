@@ -48,14 +48,14 @@ router.get('/info/:facebook_uid', function(req, res) {
 });
 
 //store user info
-router.post('/info', function(req, res) {
-  User.find(req.body.facebook_uid, function(err, users){
+router.post('/info/:facebook_uid', function(req, res) {
+  User.find(req.params.facebook_uid, function(err, users){
     if (err){
       console.log(err);
-      res.status(500).send('error');
+      return res.status(500).send('error');
     } 
     else if(!users){
-      res.status(500).send('data error');
+      return res.status(500).send('data error');
     }
     else{
       console.log("USERS", users[0]);
@@ -63,30 +63,23 @@ router.post('/info', function(req, res) {
       console.log("params sent: ",req.body);
       user.facebook_uid = req.body.facebook_uid || 1;
       user.name = req.body.name;
-      user.sex = req.body.sex;
-      user.weight = req.body.weight;
-      var height = {
-        feet: req.body["height[feet]"],
-        inches: req.body["height[inches]"]
-      };
-      user.height = height;
-      user.date_of_birth = req.body.date_of_birth;
-      user.age = user.userAge(req.body.date_of_birth);
-      console.log("user age", user.date_of_birth, user.age);
-      user.miles = user.milesRan(req.body.hours, req.body.minutes);
-      user.activity = {
-        activityLevel: req.body.activityLevel,
-        activityValue: req.body.activityValue
-      };
-
+      user.sex = '';
+      user.weight = '';
+      user.height.feet = '';
+      user.height.inches = '';
+      user.date_of_birth = '';
+      user.age = '';
+      user.miles = '';
+      user.activity.activityLevel = '';
+      user.activity.activityValue = '';
       user.dataSeted = true;
       user.update(function(err, data){
         if (err) {
           console.log(err);
-          res.status(500).send('error');
+          return res.status(500).send('error');
         }
         else if(!data){
-          res.status(500).send('data error');
+          return res.status(500).send('data error');
         }
         else{
           console.log("user1: ",data);
@@ -99,10 +92,9 @@ router.post('/info', function(req, res) {
 });
 
 router.put('/info/:facebook_uid', function(req, res) {
-  User.find(req.body.facebook_uid, function(err, user) {
+  User.findOne(req.params.facebook_uid, function(err, user) {
     if (err) return res.status(500).send('err', err);
     if (!user) return res.status(500).send({msg: "user not found"});
-
       user.sex = req.body.sex;
       user.weight = req.body.weight;
       var height = {
@@ -111,15 +103,22 @@ router.put('/info/:facebook_uid', function(req, res) {
       };
       user.height = height;
       user.date_of_birth = req.body.date_of_birth;
-      // user.age = user.userAge(req.body.date_of_birth);
+      user.age = req.body.age;
       // user.miles = user.milesRan(req.body.hours, req.body.minutes);
-      user.activity = {
-        activityLevel: req.body.activityLevel,
-        activityValue: req.body.activityValue
-      };
+      // user.activity = {
+      //   activityLevel: req.body.activityLevel,
+      //   activityValue: req.body.activityValue
+      // };
+      user.activity.activityLevel = req.body.activityLevel;
+      user.activity.activityValue = req.body.activityValue;
       user.dataSeted = true;
-      var upsertData = user.toObject();
-      User.update()
+      console.log('REQ BODY', req.body.activity);
+      user.save(function(err, data) {
+        if (err) return res.status(500).send('err', err);
+        if (!data) return res.status(500).send({msg: 'data not saved'});
+        console.log('data saved', data);
+      });
+      res.send({msg: 'user updated'});
   });
 });
 
@@ -133,8 +132,8 @@ router.post('/signin', function(req, res){
       user.name = req.body.name;
       user.dataSeted = false;
       user.save(function(err, data) {
-        if (err) res.status(500).send('error');
-        if (!data) res.status(500).send('data error');
+        if (err) return res.status(500).send('error');
+        if (!data) return res.status(500).send('data error');
         console.log("user: ", user);
         console.log("saved user: ", data);
         res.json(data);

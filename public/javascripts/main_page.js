@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+	//button on click events update the user information on the front end and back.
 	$("#run-content").on("click", function(e){
 		e.preventDefault();
 		if(!currentUser.dataSeted){
@@ -27,7 +29,16 @@ $(document).ready(function(){
 			else{
 				currentUser.sex = "Female";
 			}
-			console.log("currentUser: ", currentUser);
+			// console.log("currentUser: ", currentUser.facebook_uid);
+			$.ajax({
+				url: '/users/info/' + currentUser.facebook_uid,
+				type: 'PUT',
+				data: JSON.stringify(currentUser),
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 			$.mobile.changePage( "#height", { transition: "slide", changeHash: false });
 		}
 		else{
@@ -41,9 +52,17 @@ $(document).ready(function(){
 			feet: $("#height-feet").val(),
     	inches: $("#height-inches").val()
 		};
-		console.log("height: ", height);
 		currentUser.height = height;
-		console.log("currentUser: ", currentUser);
+		console.log("currentUser: ", currentUser.height);
+		$.ajax({
+				url: '/users/info/' + currentUser.facebook_uid,
+				type: 'PUT',
+				data: JSON.stringify(currentUser),
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 		$("#user-height").append("<span>" + currentUser.height.feet + " " + currentUser.height.inches + " " + "</span>");
 		$.mobile.changePage( "#weight", { transition: "slide", changeHash: false });
 	});
@@ -52,7 +71,15 @@ $(document).ready(function(){
 		e.preventDefault(); 
 		currentUser.weight = $("#weight-lbs").val();
 		console.log("weight: ", currentUser.weight);
-		console.log("currentUser: ", currentUser);
+		$.ajax({
+				url: '/users/info/' + currentUser.facebook_uid,
+				type: 'PUT',
+				data: JSON.stringify(currentUser),
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 		$("#user-weight").append("<span>" + currentUser.weight + "</span>");
 		$.mobile.changePage( "#birthday", { transition: "slide", changeHash: false });
 	});
@@ -69,7 +96,16 @@ $(document).ready(function(){
 	  var birthdate = new Date(date);
 	  var age = moment().diff(birthdate,"years");
 	  currentUser.age = age.toString();
-
+	  console.log('currentUser age', currentUser.age);
+	  $.ajax({
+				url: '/users/info/' + currentUser.facebook_uid,
+				type: 'PUT',
+				data: JSON.stringify(currentUser),
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 		$("#user-age").append("<span>" + currentUser.age + "</span>");
 		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
@@ -78,10 +114,9 @@ $(document).ready(function(){
 		e.preventDefault();
 		currentUser.hours = $("#run-hours").val();
 		currentUser.minutes = $("#run-minutes").val();
-		console.log("currentUser: ", currentUser);
-		currentUser.getBeerData(function(){
-			console.log("currentUser with beer: ", currentUser);
-		});
+		// currentUser.getBeerData(function(){
+		// 	console.log("currentUser with beer: ", currentUser);
+		// });
 		var miles = function() {
 			var totalTime = currentUser.hours + (currentUser.minutes / 60);
   		//Eight is avg speed of a running human.
@@ -89,6 +124,15 @@ $(document).ready(function(){
   		return miles.toFixed(2);
 		};
 		currentUser.miles = miles();
+		$.ajax({
+				url: '/users/info/' + currentUser.facebook_uid,
+				type: 'PUT',
+				data: JSON.stringify(currentUser),
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 		$(".miles-text").text("Miles: " + currentUser.miles);
 		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage( "#fitness-donut", { transition: "slide", changeHash: false });
@@ -98,6 +142,15 @@ $(document).ready(function(){
 		e.preventDefault();
 		currentUser.beers = $("#beers-drank").val();
 		console.log("currentUser: ", currentUser);
+		$.ajax({
+				url: '/users/info/' + currentUser.facebook_uid,
+				type: 'PUT',
+				data: JSON.stringify(currentUser),
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 		$(".miles-text").text("Miles: " + currentUser.miles);
 		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false });
@@ -112,16 +165,15 @@ $(document).ready(function(){
 		currentUser.activity = activity;
 		console.log("currentUser activity level", currentUser.activity.activityValue, currentUser.activity.activityLevel);
 		console.log("currentUser: ", currentUser);
-		console.log("saving to backend...");
-		currentUser.save(function(err, data){
-			if (err) {
-				console.log('did not save data', err);
-			} else {
-				currentUser.dataSeted = data.dataSeted;
-				currentUser.age = data.age;
-				console.log("saved currentUser: ", currentUser);
-			}
-		});
+		$.ajax({
+				url: '/users/info/' + currentUser.facebook_uid,
+				type: 'PUT',
+				data: JSON.stringify(currentUser),
+				contentType: 'application/json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 		$("#user-activity").append("<span>" + currentUser.activity.activityLevel + "</span>");
 		$.mobile.changePage("#run", { transition: "slide", changeHash: false});
 	});

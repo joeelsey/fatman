@@ -18,7 +18,7 @@ function User(currentUserData){
     miles: "",
 	  save: function(callback){
 	  	var requestData = this.getRequestData();
-			$.post('/users/info', requestData, callback);
+			$.post('/users/info/' + requestData.facebook_uid, requestData, callback);
 		},
 		getRequestData: function(){
 			var requestData = {
