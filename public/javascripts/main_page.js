@@ -89,7 +89,7 @@ $(document).ready(function(){
 		var day = $("#birthday-day").val();
 		var month = $("#birthday-month").val();
 		var year = $("#birthday-year").val();
-		var date = year.toString() + " " + month.toString() + " " + day.toString();
+		var date = day.toString() + " " + month.toString() + " " + year.toString();
 		console.log("Date: ", date);
 		currentUser.date_of_birth = date;
 
