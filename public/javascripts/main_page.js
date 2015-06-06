@@ -1,5 +1,4 @@
-$(document).ready(function(){
-
+$(document).ready(function() {
 	//button on click events update the user information on the front end and back.
 	$("#run-content").on("click", function(e){
 		e.preventDefault();
@@ -29,7 +28,6 @@ $(document).ready(function(){
 			else{
 				currentUser.sex = "Female";
 			}
-			// console.log("currentUser: ", currentUser.facebook_uid);
 			$.ajax({
 				url: '/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
