@@ -48,9 +48,11 @@ $(document).ready(function(){
 
 	$("#height-btn").on("click", function(e) {
 		e.preventDefault();
+		var feet = $("#height-feet").val();
+		var inches = $("#height-inches").val();
 		var height = {
-			feet: $("#height-feet").val(),
-    	inches: $("#height-inches").val()
+			feet: feet.toString(),
+    	inches: inches.toString()
 		};
 		currentUser.height = height;
 		console.log("currentUser: ", currentUser.height);
@@ -114,9 +116,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		currentUser.hours = $("#run-hours").val();
 		currentUser.minutes = $("#run-minutes").val();
-		// currentUser.getBeerData(function(){
-		// 	console.log("currentUser with beer: ", currentUser);
-		// });
 		var miles = function() {
 			var totalTime = currentUser.hours + (currentUser.minutes / 60);
   		//Eight is avg speed of a running human.
