@@ -22,20 +22,21 @@ router.get('/beer/:facebook_uid', function(req, res) {
   User.find(req.params.facebook_uid, function(err, users) {
     if (err) res.status(500).send('error');
     if (!users) res.status(500).send('user error');
-    if (users.lengt == 0) res.status(401).send("user error")
+    if (users.length === 0) res.status(401).send("user error");
     var user = users[0];
-    var caloriesBurned = user.caloriesBurnedByRunning(req.body.distance, req.body.time);
+    var distance = user.milesRan(req.body.hours, req.body.minutes);
+    var time = req.body.hours + (req.body.minutes/60);
+    var caloriesBurned = user.caloriesBurnedByRunning(distance, time);
     var numberOfBeers = user.numberOfBeers(caloriesBurned);
     var beerData = {
       nutritionRating: user.nutritionRating(),
-      numberOfBeers: caloriesBurned,
-      caloriesBurned: numberOfBeers
+      milesRan: distance,
+      caloriesBurned: numberOfBeers,
+      numberOfBeers: caloriesBurned
     };
     res.json(beerData);
   });
 });
-
-
 
 //get user by id
 router.get('/info/:facebook_uid', function(req, res) {
@@ -97,12 +98,38 @@ router.post('/info', function(req, res) {
   });
 });
 
+router.put('/info/:facebook_uid', function(req, res) {
+  User.find(req.body.facebook_uid, function(err, user) {
+    if (err) return res.status(500).send('err', err);
+    if (!user) return res.status(500).send({msg: "user not found"});
+
+      user.sex = req.body.sex;
+      user.weight = req.body.weight;
+      var height = {
+        feet: req.body["height[feet]"],
+        inches: req.body["height[inches]"]
+      };
+      user.height = height;
+      user.date_of_birth = req.body.date_of_birth;
+      // user.age = user.userAge(req.body.date_of_birth);
+      // user.miles = user.milesRan(req.body.hours, req.body.minutes);
+      user.activity = {
+        activityLevel: req.body.activityLevel,
+        activityValue: req.body.activityValue
+      };
+      user.dataSeted = true;
+      var upsertData = user.toObject();
+      User.update()
+  });
+});
+
 router.post('/signin', function(req, res){
-  User.find(req.body.facebook_uid , "facebook_uid name", function(err, users){
+  User.find(req.body.facebook_uid, function(err, users){
     if (err) res.status(500).send('error');
     if(!users || users.length === 0){
+      console.log("Creating new user!!");
       var user = new User();
-      user.facebook_uid = req.body.facebook_uid;
+      user.facebook_uid = req.body.facebook_uid || 1;
       user.name = req.body.name;
       user.dataSeted = false;
       user.save(function(err, data) {
@@ -114,12 +141,11 @@ router.post('/signin', function(req, res){
       });
     }
     else{
-      var user = users[0]
-      console.log("Found User: ", user);
-      res.json(user);
+      users = users[0];
+      console.log("Found User: ", users);
+      res.json(users);
     }
   });
 });
-
 
 module.exports = router;
