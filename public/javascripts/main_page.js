@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+	//button on click events update the user information on the front end and back.
 	$("#run-content").on("click", function(e){
 		e.preventDefault();
 		if(!currentUser.dataSeted){
@@ -50,7 +52,6 @@ $(document).ready(function(){
 			feet: $("#height-feet").val(),
     	inches: $("#height-inches").val()
 		};
-		console.log("height: ", height);
 		currentUser.height = height;
 		console.log("currentUser: ", currentUser.height);
 		$.ajax({
@@ -70,7 +71,6 @@ $(document).ready(function(){
 		e.preventDefault(); 
 		currentUser.weight = $("#weight-lbs").val();
 		console.log("weight: ", currentUser.weight);
-		console.log("currentUser: ", currentUser);
 		$.ajax({
 				url: '/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
@@ -96,6 +96,7 @@ $(document).ready(function(){
 	  var birthdate = new Date(date);
 	  var age = moment().diff(birthdate,"years");
 	  currentUser.age = age.toString();
+	  console.log('currentUser age', currentUser.age);
 	  $.ajax({
 				url: '/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
@@ -113,7 +114,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		currentUser.hours = $("#run-hours").val();
 		currentUser.minutes = $("#run-minutes").val();
-		console.log("currentUser: ", currentUser);
 		// currentUser.getBeerData(function(){
 		// 	console.log("currentUser with beer: ", currentUser);
 		// });
@@ -165,7 +165,6 @@ $(document).ready(function(){
 		currentUser.activity = activity;
 		console.log("currentUser activity level", currentUser.activity.activityValue, currentUser.activity.activityLevel);
 		console.log("currentUser: ", currentUser);
-		console.log("saving to backend...");
 		$.ajax({
 				url: '/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
@@ -175,15 +174,6 @@ $(document).ready(function(){
 					console.log(data);
 				}
 			});
-		// currentUser.save(function(err, data){
-		// 	if (err) {
-		// 		console.log('did not save data', err);
-		// 	} else {
-		// 		currentUser.dataSeted = data.dataSeted;
-		// 		currentUser.age = data.age;
-		// 		console.log("saved currentUser: ", currentUser);
-		// 	}
-		// });
 		$("#user-activity").append("<span>" + currentUser.activity.activityLevel + "</span>");
 		$.mobile.changePage("#run", { transition: "slide", changeHash: false});
 	});

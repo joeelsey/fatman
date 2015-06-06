@@ -63,22 +63,15 @@ router.post('/info/:facebook_uid', function(req, res) {
       console.log("params sent: ",req.body);
       user.facebook_uid = req.body.facebook_uid;
       user.name = req.body.name;
-      // I don't think we need any of this for the creating of the user...
-      // user.sex = req.body.sex;
-      // user.weight = req.body.weight;
-      // var height = {
-      //   feet: req.body["height[feet]"],
-      //   inches: req.body["height[inches]"]
-      // };
-      // user.height = height;
-      // user.date_of_birth = req.body.date_of_birth;
-      // user.age = user.userAge(req.body.date_of_birth);
-      // console.log("user age", user.date_of_birth, user.age);
-      // user.miles = user.milesRan(req.body.hours, req.body.minutes);
-      // user.activity = {
-      //   activityLevel: req.body.activityLevel,
-      //   activityValue: req.body.activityValue
-      // };
+      user.sex = '';
+      user.weight = '';
+      user.height.feet = '';
+      user.height.inches = '';
+      user.date_of_birth = '';
+      user.age = '';
+      user.miles = '';
+      user.activity.activityLevel = '';
+      user.activity.activityValue = '';
       user.dataSeted = true;
       user.update(function(err, data){
         if (err) {
@@ -112,15 +105,18 @@ router.put('/info/:facebook_uid', function(req, res) {
       user.date_of_birth = req.body.date_of_birth;
       user.age = req.body.age;
       // user.miles = user.milesRan(req.body.hours, req.body.minutes);
-      user.activity = {
-        activityLevel: req.body.activityLevel,
-        activityValue: req.body.activityValue
-      };
+      // user.activity = {
+      //   activityLevel: req.body.activityLevel,
+      //   activityValue: req.body.activityValue
+      // };
+      user.activity.activityLevel = req.body.activityLevel;
+      user.activity.activityValue = req.body.activityValue;
       user.dataSeted = true;
+      console.log('REQ BODY', req.body.activity);
       user.save(function(err, data) {
         if (err) return res.status(500).send('err', err);
         if (!data) return res.status(500).send({msg: 'data not saved'});
-        console.log('data saved');
+        console.log('data saved', data);
       });
       res.send({msg: 'user updated'});
   });
