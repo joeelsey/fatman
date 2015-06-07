@@ -92,8 +92,12 @@ router.put('/info/:facebook_uid', function(req, res) {
       user.beers = req.body.beers;
       user.activity.activityLevel = req.body.activity.activityLevel;
       user.activity.activityValue = req.body.activity.activityValue;
+      user.nutritionRating(user, function(err, data) {
+        if (err) throw (err);
+        console.log("NUTRITION", data);
+        user.rating = data;
+      });
       user.dataSeted = true;
-      console.log('REQ BODY', req.body.activity);
       user.save(function(err, data) {
         if (err) return res.status(500).send('err', err);
         if (!data) return res.status(500).send({msg: 'data not saved'});

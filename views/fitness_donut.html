@@ -23,21 +23,25 @@
                   { label: 'miles', count: 1},
                   { label: 'empty', count: 100}
                 ]; 
-
-        $.ajax({
-            url: '/users/info',
-            type: 'GET',
-            async: false,
-            success: function(data) {
-                console.log(data);
-                dataset[0].count = data[0].beers || 1;
-                dataset[1].count = data[0].miles || 1;
-                $("#user-height").append("<span>" + data[0].height.feet + " " + data[0].height.inches + " " + "</span>");
-                $("#user-weight").append("<span>" + data[0].weight + "</span>");
-                $("#user-age").append("<span>" + data[0].age + "</span>");
-                $("#user-activity").append("<span>" + data[0].activity.activityLevel + "</span>");
-            }
+        $(window).on('load', function() {
+            $.ajax({
+                url: '/users/info',
+                type: 'GET',
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    dataset[0].count = data[0].beers || 1;
+                    dataset[1].count = data[0].miles || 1;
+                    $("#user-height").append("<span>" + data[0].height.feet + " " + data[0].height.inches + " " + "</span>");
+                    $("#user-weight").append("<span>" + data[0].weight + "</span>");
+                    $("#user-age").append("<span>" + data[0].age + "</span>");
+                    $("#user-activity").append("<span>" + data[0].activity.activityLevel + "</span>");
+                    $(".miles-text").text("Miles: " + data[0].miles);
+                    $(".beer-text").text("Beers: " + data[0].beers);
+                }
+            });
         });
+        
 
         function drawChart() {
             var width = 300,
@@ -100,7 +104,7 @@
                 chart.attr("height", targetWidth / aspect);
 
         });
-        };
+        }
         drawChart();
         //resize chart to window
         

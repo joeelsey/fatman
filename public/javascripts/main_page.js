@@ -64,7 +64,6 @@ $(document).ready(function() {
 					console.log(data);
 				}
 			});
-		$("#user-height").append("<span>" + currentUser.height.feet + " " + currentUser.height.inches + " " + "</span>");
 		$.mobile.changePage( "#weight", { transition: "slide", changeHash: false });
 	});
 
@@ -81,7 +80,6 @@ $(document).ready(function() {
 					console.log(data);
 				}
 			});
-		$("#user-weight").append("<span>" + currentUser.weight + "</span>");
 		$.mobile.changePage( "#birthday", { transition: "slide", changeHash: false });
 	});
 
@@ -107,7 +105,6 @@ $(document).ready(function() {
 					console.log(data);
 				}
 			});
-		$("#user-age").append("<span>" + currentUser.age + "</span>");
 		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
 
@@ -131,8 +128,6 @@ $(document).ready(function() {
 					console.log(data);
 				}
 			});
-		$(".miles-text").text("Miles: " + currentUser.miles);
-		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage( "#fitness-donut", { transition: "slide", changeHash: false });
 	});
 
@@ -149,8 +144,6 @@ $(document).ready(function() {
 					console.log(data);
 				}
 			});
-		$(".miles-text").text("Miles: " + currentUser.miles);
-		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false });
 	});
 
@@ -172,7 +165,6 @@ $(document).ready(function() {
 					console.log(data);
 				}
 			});
-		$("#user-activity").append("<span>" + currentUser.activity.activityLevel + "</span>");
 		$.mobile.changePage("#run", { transition: "slide", changeHash: false});
 	});
 });

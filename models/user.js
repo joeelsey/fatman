@@ -21,6 +21,7 @@ var userSchema = mongoose.Schema({
   },
   beers: String,
   miles: String,
+  rating: String,
   coupons: []
 });
 
@@ -30,20 +31,21 @@ userSchema.methods.userAge = function(birthday) {
   return age.toString();
 };
 
-userSchema.methods.nutritionRating = function() {
-  var USER_CM = (userSchema.height / 0.032808) + (userSchema.inches * 2.54);
-  var USER_WEIGHT = userSchema.weight * 0.45359237;
+userSchema.methods.nutritionRating = function(user) {
+  var USER_CM = (user.height / 0.032808) + (user.inches * 2.54);
+  var USER_WEIGHT = user.weight * 0.45359237;
   var nutritionRating;
-  if (userSchema.sex === "Male") {
-    var Men_REE = (9.99 * USER_WEIGHT) + (6.25 * USER_CM) - (4.92 * userSchema.age) + 5;
+  if (user.sex === "Male") {
+    var Men_REE = (9.99 * USER_WEIGHT) + (6.25 * USER_CM) - (4.92 * user.age) + 5;
     nutritionRating= Men_REE;
   }
 
-  if (userSchema.sex === "Female") {
-    var Women_REE = (9.99 * USER_WEIGHT) + (6.25 * USER_CM) - (4.92 * userSchema.age) - 161;
+  if (user.sex === "Female") {
+    var Women_REE = (9.99 * USER_WEIGHT) + (6.25 * USER_CM) - (4.92 * user.age) - 161;
     nutritionRating = Women_REE;
   }
-  nutritionRating *= Number(userSchema.activity);
+  nutritionRating *= Number(user.activity);
+  console.log('NUTRITION RATING', nutritionRating);
   return nutritionRating;
 };
 
