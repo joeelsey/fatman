@@ -1,6 +1,6 @@
-$(document).ready(function(){
-
+$(document).ready(function() {
 	//button on click events update the user information on the front end and back.
+
 	$("#run-content").on("click", function(e){
 		e.preventDefault();
 		if(!currentUser.dataSeted){
@@ -29,7 +29,6 @@ $(document).ready(function(){
 			else{
 				currentUser.sex = "Female";
 			}
-			// console.log("currentUser: ", currentUser.facebook_uid);
 			$.ajax({
 				url: '/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
@@ -48,9 +47,11 @@ $(document).ready(function(){
 
 	$("#height-btn").on("click", function(e) {
 		e.preventDefault();
+		var feet = $("#height-feet").val();
+		var inches = $("#height-inches").val();
 		var height = {
-			feet: $("#height-feet").val(),
-    	inches: $("#height-inches").val()
+			feet: feet.toString(),
+    	inches: inches.toString()
 		};
 		currentUser.height = height;
 		console.log("currentUser: ", currentUser.height);
@@ -63,7 +64,6 @@ $(document).ready(function(){
 					console.log(data);
 				}
 			});
-		$("#user-height").append("<span>" + currentUser.height.feet + " " + currentUser.height.inches + " " + "</span>");
 		$.mobile.changePage( "#weight", { transition: "slide", changeHash: false });
 	});
 
@@ -80,7 +80,6 @@ $(document).ready(function(){
 					console.log(data);
 				}
 			});
-		$("#user-weight").append("<span>" + currentUser.weight + "</span>");
 		$.mobile.changePage( "#birthday", { transition: "slide", changeHash: false });
 	});
 
@@ -106,7 +105,6 @@ $(document).ready(function(){
 					console.log(data);
 				}
 			});
-		$("#user-age").append("<span>" + currentUser.age + "</span>");
 		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
 
@@ -114,9 +112,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		currentUser.hours = $("#run-hours").val();
 		currentUser.minutes = $("#run-minutes").val();
-		// currentUser.getBeerData(function(){
-		// 	console.log("currentUser with beer: ", currentUser);
-		// });
 		var miles = function() {
 			var totalTime = currentUser.hours + (currentUser.minutes / 60);
   		//Eight is avg speed of a running human.
@@ -133,8 +128,6 @@ $(document).ready(function(){
 					console.log(data);
 				}
 			});
-		$(".miles-text").text("Miles: " + currentUser.miles);
-		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage( "#fitness-donut", { transition: "slide", changeHash: false });
 	});
 
@@ -151,8 +144,6 @@ $(document).ready(function(){
 					console.log(data);
 				}
 			});
-		$(".miles-text").text("Miles: " + currentUser.miles);
-		$(".beer-text").text("Beers: " + currentUser.beers);
 		$.mobile.changePage("#fitness-donut", { transition: "slide", changeHash: false });
 	});
 
@@ -174,7 +165,6 @@ $(document).ready(function(){
 					console.log(data);
 				}
 			});
-		$("#user-activity").append("<span>" + currentUser.activity.activityLevel + "</span>");
 		$.mobile.changePage("#run", { transition: "slide", changeHash: false});
 	});
 });

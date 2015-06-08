@@ -49,44 +49,31 @@ router.get('/info/:facebook_uid', function(req, res) {
 
 //store user info
 router.post('/info/:facebook_uid', function(req, res) {
-  User.find(req.params.facebook_uid, function(err, users){
-    if (err){
+  var user = new User();
+  user.facebook_uid = req.params.facebook_uid;
+  user.name = req.body.name;
+  user.sex = '';
+  user.weight = '';
+  user.height.feet = '';
+  user.height.inches = '';
+  user.date_of_birth = '';
+  user.age = '';
+  user.miles = '';
+  user.activity.activityLevel = '';
+  user.activity.activityValue = '';
+  user.dataSeted = true;
+  user.save(function(err, data){
+    if (err) {
       console.log(err);
       return res.status(500).send('error');
-    } 
-    else if(!users){
+    }
+    else if(!data){
       return res.status(500).send('data error');
     }
     else{
-      console.log("USERS", users[0]);
-      var user = users[0];
-      console.log("params sent: ",req.body);
-      user.facebook_uid = req.body.facebook_uid || 1;
-      user.name = req.body.name;
-      user.sex = '';
-      user.weight = '';
-      user.height.feet = '';
-      user.height.inches = '';
-      user.date_of_birth = '';
-      user.age = '';
-      user.miles = '';
-      user.activity.activityLevel = '';
-      user.activity.activityValue = '';
-      user.dataSeted = true;
-      user.update(function(err, data){
-        if (err) {
-          console.log(err);
-          return res.status(500).send('error');
-        }
-        else if(!data){
-          return res.status(500).send('data error');
-        }
-        else{
-          console.log("user1: ",data);
-          console.log("user2: ",user);
-          res.json(user);
-        }
-      });
+      console.log("user1: ",data);
+      console.log("user2: ",user);
+      res.json(user);
     }
   });
 });
@@ -97,22 +84,20 @@ router.put('/info/:facebook_uid', function(req, res) {
     if (!user) return res.status(500).send({msg: "user not found"});
       user.sex = req.body.sex;
       user.weight = req.body.weight;
-      var height = {
-        feet: req.body["height[feet]"],
-        inches: req.body["height[inches]"]
-      };
-      user.height = height;
+      user.height.feet = req.body.height.feet;
+      user.height.inches = req.body.height.inches;
       user.date_of_birth = req.body.date_of_birth;
       user.age = req.body.age;
-      // user.miles = user.milesRan(req.body.hours, req.body.minutes);
-      // user.activity = {
-      //   activityLevel: req.body.activityLevel,
-      //   activityValue: req.body.activityValue
-      // };
-      user.activity.activityLevel = req.body.activityLevel;
-      user.activity.activityValue = req.body.activityValue;
+      user.miles = req.body.miles;
+      user.beers = req.body.beers;
+      user.activity.activityLevel = req.body.activity.activityLevel;
+      user.activity.activityValue = req.body.activity.activityValue;
+      user.nutritionRating(user, function(err, data) {
+        if (err) throw (err);
+        console.log("NUTRITION", data);
+        user.rating = data;
+      });
       user.dataSeted = true;
-      console.log('REQ BODY', req.body.activity);
       user.save(function(err, data) {
         if (err) return res.status(500).send('err', err);
         if (!data) return res.status(500).send({msg: 'data not saved'});
