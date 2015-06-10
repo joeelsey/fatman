@@ -38,7 +38,7 @@ router.get('/beer/:facebook_uid', function(req, res) {
   });
 });
 
-//get user by id
+//get user by facebook id
 router.get('/info/:facebook_uid', function(req, res) {
   User.find(req.params.facebook_uid, function(err, data) {
     if (err) res.status(500).send('error');
@@ -92,10 +92,13 @@ router.put('/info/:facebook_uid', function(req, res) {
       user.beers = req.body.beers;
       user.activity.activityLevel = req.body.activity.activityLevel;
       user.activity.activityValue = req.body.activity.activityValue;
-      user.nutritionRating(user, function(err, data) {
-        if (err) throw (err);
-        console.log("NUTRITION", data);
-        user.rating = data;
+      user.rating = user.nutritionRating(user, function(err, data) {
+        if (err) {
+          throw err;
+        } 
+        console.log("NUTRITION===============>>>>>>", user.rating, data);
+        return user.rating = data;
+        
       });
       user.dataSeted = true;
       user.save(function(err, data) {
