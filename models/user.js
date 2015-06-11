@@ -20,7 +20,14 @@ var userSchema = mongoose.Schema({
     activityValue: String
   },
   beers: String,
-  miles: String,
+  exercise: {
+    miles: String,
+    time: String
+  },
+  calories: {
+    burned: String,
+    earned: String
+  },
   rating: String,
   rating: String,
   coupons: []
@@ -33,7 +40,7 @@ userSchema.methods.userAge = function(birthday) {
 };
 
 userSchema.methods.nutritionRating = function(user) {
-  // console.log('NUTRITION RATING METHOD======', user.height.feet, user.height.inches, user.weight, user.sex, user.age, user.activity.activityValue);
+  console.log('NUTRITION RATING METHOD======', user.height.feet, user.height.inches, user.weight, user.sex, user.age, user.activity.activityValue);
   var USER_CM = (Number(user.height.feet) / 0.032808) + (Number(user.height.inches) * 2.54);
   var USER_WEIGHT = Number(user.weight) * 0.45359237;
   var nutritionRating;
@@ -52,10 +59,10 @@ userSchema.methods.nutritionRating = function(user) {
   return nutritionRating.toString();
 };
 
-userSchema.methods.milesRan = function(hours, minutes) {
-  var totalTime = hours + (minutes / 60);
+userSchema.methods.milesRan = function(time) {
+  // var totalTime = hours + (minutes / 60);
   //Eight is avg speed of a running human.
-  var miles = 8 * totalTime;
+  var miles = 8 * time;
   return miles;
 };
 
@@ -71,16 +78,17 @@ userSchema.methods.numberOfBeers = function(caloriesBurned) {
   return roundedBeers;
 };
 
-userSchema.methods.caloriesBurnedByRunning = function (distance,time) {  
+userSchema.methods.caloriesBurnedByRunning = function (user) {  
   //distance in miles
   //time in hours
+  console.log('USER CALORIES BURNED', user.exercise.time, user.exercise.miles, user.weight);
   var calories = 0;
   var met = 0;
   var metArray = [6.0,8.3,9,9.8,10.5,11,11.4,11.8,12.3,12.8,14.5,16,19,19.8,23];
   var knownSpeeds = [4,5,5.2,6,6.7,7,7.5,8,8.6,9,10,11,12,13,14];
-  var speed = (distance/time);
+  var speed = (Number(user.exercise.miles)/Number(user.exercise.time));
   var roundedSpeed = closestSpeed(speed);
-  var weight = Number(userSchema.weight * 0.45359237);
+  var weight = Number(user.weight * 0.45359237);
   met = getMet(roundedSpeed);
   calories = cckg(weight,met,time);
   
@@ -108,7 +116,7 @@ userSchema.methods.caloriesBurnedByRunning = function (distance,time) {
     var metIndex = knownSpeeds.indexOf(s);
     return metArray[metIndex];
   }
-
+  console.log('USER CALORIES BURNED AT THE END', calories);
   return calories;
 };
 

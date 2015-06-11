@@ -24,10 +24,10 @@ $(document).ready(function() {
 		var female = $("#checkbox-v-2b").is(':checked');
 		if(( male && !female ) || ( !male && female )){ //male xor female
 			if(male){
-				currentUser.sex = "Male";
+				currentUser.sex = "male";
 			}
 			else{
-				currentUser.sex = "Female";
+				currentUser.sex = "female";
 			}
 			$.ajax({
 				url: '/users/info/' + currentUser.facebook_uid,
@@ -119,6 +119,7 @@ $(document).ready(function() {
   		return miles.toFixed(2);
 		};
 		currentUser.miles = miles();
+		currentUser.time = Number(currentUser.hours + (currentUser.minutes / 60)).toFixed(1);
 		$.ajax({
 				url: '/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',

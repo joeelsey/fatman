@@ -18,26 +18,6 @@ router.get('/info', function(req, res) {
   });
 });
 
-router.get('/beer/:facebook_uid', function(req, res) {
-  User.find(req.params.facebook_uid, function(err, users) {
-    if (err) res.status(500).send('error');
-    if (!users) res.status(500).send('user error');
-    if (users.length === 0) res.status(401).send("user error");
-    var user = users[0];
-    var distance = user.milesRan(req.body.hours, req.body.minutes);
-    var time = req.body.hours + (req.body.minutes/60);
-    var caloriesBurned = user.caloriesBurnedByRunning(distance, time);
-    var numberOfBeers = user.numberOfBeers(caloriesBurned);
-    var beerData = {
-      nutritionRating: user.nutritionRating(),
-      milesRan: distance,
-      caloriesBurned: numberOfBeers,
-      numberOfBeers: caloriesBurned
-    };
-    res.json(beerData);
-  });
-});
-
 //get user by facebook id
 router.get('/info/:facebook_uid', function(req, res) {
   User.find(req.params.facebook_uid, function(err, data) {
@@ -58,9 +38,12 @@ router.post('/info/:facebook_uid', function(req, res) {
   user.height.inches = '';
   user.date_of_birth = '';
   user.age = '';
-  user.miles = '';
+  user.exercise.miles = '';
+  user.exercise.time = '';
   user.activity.activityLevel = '';
   user.activity.activityValue = '';
+  user.calories.burned = '';
+  user.calories.earned = '';
   user.dataSeted = true;
   user.save(function(err, data){
     if (err) {
@@ -78,6 +61,7 @@ router.post('/info/:facebook_uid', function(req, res) {
   });
 });
 
+//update user info.
 router.put('/info/:facebook_uid', function(req, res) {
   User.findOne(req.params.facebook_uid, function(err, user) {
     if (err) return res.status(500).send('err', err);
@@ -88,10 +72,19 @@ router.put('/info/:facebook_uid', function(req, res) {
       user.height.inches = req.body.height.inches;
       user.date_of_birth = req.body.date_of_birth;
       user.age = req.body.age;
-      user.miles = req.body.miles;
+      user.exercise.miles = req.body.miles;
+      user.exercise.time = req.body.time;
       user.beers = req.body.beers;
       user.activity.activityLevel = req.body.activity.activityLevel;
       user.activity.activityValue = req.body.activity.activityValue;
+      user.calories.earned = ;
+      user.calories.burned = user.caloriesBurnedByRunning(user, function(err, data) {
+        if (err) {
+          throw err;
+        }
+        console.log("calories Burned!1!!!!!", data);
+        return user.calories.burned = data;
+      });
       user.rating = user.nutritionRating(user, function(err, data) {
         if (err) {
           throw err;
