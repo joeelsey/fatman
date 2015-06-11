@@ -37,6 +37,7 @@ function upload_file(file, signed_request, url){
         if (xhr.status === 200) {
             document.getElementById("coupon_image_preview").src = url;
             document.getElementById("coupon_image_url").value = url;
+            $("#submit_coupon").removeAttr("disabled")
         }
     };
     xhr.onerror = function() {

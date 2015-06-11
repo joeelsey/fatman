@@ -9,7 +9,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/coupons', function(req, res) {
-  res.render('coupons/index', { title: 'Admin' });
+  Coupon.find({}, function(err, coupons){
+    if (err) res.status(500).send('error');
+    if (!coupons) res.status(500).send('coupon error');
+    console.log("coupons: ", coupons);
+    res.render('coupons/index', { title: 'Admin', coupons: coupons });
+  });
+  
 });
 
 router.get('/coupons/new', function(req, res){
@@ -18,10 +24,12 @@ router.get('/coupons/new', function(req, res){
 
 router.post('/coupons', function(req, res){
 	var coupon = new Coupon();
+  console.log("req.body: ", req.body);
 	coupon.name = req.body.name
 	coupon.location = req.body.location
 	coupon.expiration = req.body.expiration
 	coupon.imageUrl = req.body.image_url
+
 	coupon.save(function(err, data) {
     if (err) return res.status(500).send('error');
     if (!data) return res.status(500).send('data error');
