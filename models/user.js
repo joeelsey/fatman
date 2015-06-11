@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var moment = require('moment');
-var BEER_CALORIES = 200;
+var BEER_CALORIES = 156;
+var RUNNING_CALORIES = 105;
 
 var userSchema = mongoose.Schema({
 	facebook_uid: String,
@@ -19,7 +20,10 @@ var userSchema = mongoose.Schema({
     activityLevel: String,
     activityValue: String
   },
-  beers: String,
+  beers: {
+    drank: String,
+    earned: String
+  },
   exercise: {
     miles: String,
     time: String
@@ -28,7 +32,6 @@ var userSchema = mongoose.Schema({
     burned: String,
     earned: String
   },
-  rating: String,
   rating: String,
   coupons: []
 });
@@ -59,23 +62,19 @@ userSchema.methods.nutritionRating = function(user) {
   return nutritionRating.toString();
 };
 
-userSchema.methods.milesRan = function(time) {
-  // var totalTime = hours + (minutes / 60);
-  //Eight is avg speed of a running human.
-  var miles = 8 * time;
-  return miles;
+userSchema.methods.caloriesCreatedByBeer = function(user) {
+  var calories = Number(user.beers.drank) * BEER_CALORIES;
+  return calories.toString();
 };
 
-userSchema.methods.numberOfBeers = function(caloriesBurned) {
-  var decimalBeers = caloriesBurned/BEER_CALORIES;
-  var roundedBeers = Math.round( decimalBeers * 10 ) / 10;
-  userSchema.beers = roundedBeers.toString();
-  this.update(function(err, data){
-    if(err) console.debug(err);
-    if(!data) console.debug("Data Error");
-    console.log(data);
-  });
-  return roundedBeers;
+userSchema.methods.numberOfMilesEarned = function(user) {
+  var miles = Number(user.calories.earned ) / RUNNING_CALORIES;
+  return miles.toString();
+};
+
+userSchema.methods.numberOfBeersEarned = function(user) {
+  var beers = Math.round(Number(user.calories.earned) / Number(user.calories.burned));
+  return beers.toString();
 };
 
 userSchema.methods.caloriesBurnedByRunning = function (user) {  

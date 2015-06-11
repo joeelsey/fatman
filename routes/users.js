@@ -74,10 +74,23 @@ router.put('/info/:facebook_uid', function(req, res) {
       user.age = req.body.age;
       user.exercise.miles = req.body.miles;
       user.exercise.time = req.body.time;
-      user.beers = req.body.beers;
+      user.beers.drank = req.body.beers;
+      user.beers.earned = user.numberOfBeersEarned(user, function(err, data) {
+        if (err) {
+          throw err;
+        }
+        console.log('BEERS EARNED', data)
+        return user.beers.earned = data;
+      });
       user.activity.activityLevel = req.body.activity.activityLevel;
       user.activity.activityValue = req.body.activity.activityValue;
-      user.calories.earned = ;
+      user.calories.earned = user.caloriesCreatedByBeer(user, function(err, data) {
+        if (err) {
+          throw err;
+        }
+        console.log('CALORIES EARNED', data);
+        return user.calories.earned = data;
+      });
       user.calories.burned = user.caloriesBurnedByRunning(user, function(err, data) {
         if (err) {
           throw err;
