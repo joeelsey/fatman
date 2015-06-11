@@ -1,0 +1,27 @@
+.main-content{
+	margin-left: 3%;
+}
+.admin-form .form-data{
+	display: inline-block;
+	vertical-align: top;
+}
+.admin-form .form-preview{
+	display: inline-block;
+	vertical-align: top;
+}
+.admin-form .form-preview h3{
+	margin-top: 0px;
+}
+.admin-form .form-field {
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.admin-form .form-field label{
+	margin-right: 5px;
+}
+
+table.admin td{
+	min-width: 100px;
+	padding: 5px 10px;
+}
