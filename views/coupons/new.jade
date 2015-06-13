@@ -1,0 +1,22 @@
+extends ../layout
+block content
+	h1 Add new Coupon
+	form(id="coupon", method="post", action="/admin/coupons", class="admin-form")
+		input(type="hidden", id="coupon_image_url", name = "image_url")
+		div.form-data
+			div.form-field
+				label(for="name") Coupon Name:
+				input(type="text", placeholder="Name", name="name", id="coupon_name")
+			div.form-field
+				label(for="expiration") Expiration Date:
+				input(type="date", placeholder="Expiration: 30-05-2015", name="expiration", id="coupon_expiration")
+			div.form-field
+				label(for="expiration") Bar or Venue Name:
+				input(type="text", placeholder="Location", name="location", id="coupon_location")
+			div.form-field
+				label(for="expiration") Coupon Image File:
+				input(type="file",  name = "image_file", id="coupon_image")
+			input(type="submit", value = "Add new Coupon", disabled="disabled", id="submit_coupon")
+		div.form-preview
+			h3 Preview
+			img(id="coupon_image_preview", src="/images/admin/placeholder.png", style = "width:350px")

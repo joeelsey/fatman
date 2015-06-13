@@ -5,5 +5,5 @@ $(function() {
 		console.log("go to back page");
 		var previousPage = $.mobile.activePage.data('ui.prevPage');
 		$.mobile.changePage(previousPage, 'slide', true, true);
-	})
+	});
 });

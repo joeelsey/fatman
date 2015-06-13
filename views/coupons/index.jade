@@ -1,0 +1,19 @@
+extends ../layout
+block content
+	h1 All Coupons
+	a(href="/admin/coupons/new") new coupon
+	table.admin(border="1")
+		tr
+			td Id
+			td Name
+			td Location
+			td Expiration Date
+			td Image Url
+		for coupon in coupons
+			tr
+				td #{coupon.id}
+				td #{coupon.name}
+				td #{coupon.location}
+				td #{coupon.expiration}
+				td
+					a(href="#{coupon.imageUrl}") #{coupon.imageUrl}

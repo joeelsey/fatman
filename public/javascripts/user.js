@@ -1,4 +1,5 @@
 function User(currentUserData){
+
 	this.userData = {
 		facebook_uid: "",
 	  name: "",
@@ -14,11 +15,11 @@ function User(currentUserData){
     	activityLevel: "",
     	activityValue: ""
   	},
-	  beers: "",
-    miles: "",
+	  beers: "0",
+    miles: "0",
 	  save: function(callback){
 	  	var requestData = this.getRequestData();
-			$.post('/users/info', requestData, callback);
+			$.post('/users/info/' + requestData.facebook_uid, requestData, callback);
 		},
 		getRequestData: function(){
 			var requestData = {

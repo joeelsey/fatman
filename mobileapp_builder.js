@@ -8,6 +8,7 @@ var locals = {};
 var outputDirr = __dirname + '/' + 'cordova_files';
 var assetsRootFolder = __dirname + '/' + 'public/';
 var assetsFolders = ["images", "javascripts", "stylesheets"];
+var excludeFilesAndFolders = ["admin", ".DS_Store"]
 
 function createOutputFolder(callback){
 	fs.mkdir(outputDirr, callback)
@@ -92,7 +93,8 @@ function readAndMoveFromFolder(folderName,folderPath, callback){
 
 function copyAssetsFolderToCordova(folderName,folderPath,files, callback){
 	async.each(files, function(fileName, callback){
-		if(fileName != ".DS_Store"){
+		console.log(fileName);
+		if(excludeFilesAndFolders.indexOf(fileName) < 0){
 			var filePath = folderPath + "/" + fileName;
 			console.log("About to move file: ", filePath);
 			fs.readFile(filePath, function (err, data) {
