@@ -73,7 +73,11 @@ userSchema.methods.numberOfMilesEarned = function(user) {
 };
 
 userSchema.methods.numberOfBeersEarned = function(user) {
+  console.log('NUMBER OF BEERS EARNED', user.calories.earned, user.calories.burned);
   var beers = Math.round(Number(user.calories.earned) / Number(user.calories.burned));
+  if(beers < 0){
+    beers = 0;
+  }
   return beers.toString();
 };
 
@@ -89,12 +93,12 @@ userSchema.methods.caloriesBurnedByRunning = function (user) {
   var roundedSpeed = closestSpeed(speed);
   var weight = Number(user.weight * 0.45359237);
   met = getMet(roundedSpeed);
-  calories = cckg(weight,met,time);
+  calories = cckg(weight,met, Number(user.exercise.time));
   
   /***Helpers functions***/
   function cckg(w,met,t){ 
     var kg = w*0.45359237;
-    return Math.round(met * 3.5 * (kg) / 200 * time);
+    return Math.round(met * 3.5 * (kg) / 200 * Number(user.exercise.time));
   }
 
   function closestSpeed(num) {  

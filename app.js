@@ -18,7 +18,7 @@ aws.config.update({
     secretAccessKey: process.env.AWS_SECRET_KEY,
 });
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
 console.log("=========AWS CREDENTIALS=========");
@@ -63,7 +63,7 @@ app.get('/sign_s3', function(req, res, next){
     s3.getSignedUrl('putObject', s3_params, function(err, data){
         if(err){
             console.log(err);
-            next(err)
+            next(err);
         }
         else{
             var return_data = {

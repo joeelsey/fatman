@@ -10,7 +10,7 @@
       <p><span id="user-height">Height: </span></p>
       <p><span id="user-weight">Weight: </span></p>
       <p><span id="user-age">Age: </span></p>
-      <p><span id="user-activity">Activty: </span></p>
+      <p><span id="user-activity">Activity: </span></p>
   </div>
   <div data-role="footer" data-position="fixed"> 
     <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
@@ -30,8 +30,8 @@
                 async: false,
                 success: function(data) {
                     console.log(data);
-                    dataset[0].count = data[0].beers || 1;
-                    dataset[1].count = data[0].miles || 1;
+                    dataset[0].count = data[0].beers.drank;
+                    dataset[1].count = data[0].exercise.miles;
                     $("#user-height").append("<span>" + data[0].height.feet + " " + data[0].height.inches + " " + "</span>");
                     $("#user-weight").append("<span>" + data[0].weight + "</span>");
                     $("#user-age").append("<span>" + data[0].age + "</span>");
