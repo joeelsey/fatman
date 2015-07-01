@@ -20,6 +20,11 @@ $(document).ready(function() {
 	});
 	$("#intro-btn").on("click", function(e){
 		e.preventDefault();
+		$.get('/users/info/' + currentUser.facebook_uid, function(err, data) {
+			$("#height-feet").val(data.height.feet);
+			$("#height-feet").val(data.height.inches);
+			console.log('currentUser: ', data);
+		});
 		var male = $("#checkbox-v-2a").is(':checked');
 		var female = $("#checkbox-v-2b").is(':checked');
 		if(( male && !female ) || ( !male && female )){ //male xor female

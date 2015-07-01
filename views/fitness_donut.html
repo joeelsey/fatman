@@ -19,9 +19,9 @@
         var user, userBeers, userMiles, dataset;
         
         dataset = [
-                  { label: 'beers', count: 1}, 
-                  { label: 'miles', count: 1},
-                  { label: 'empty', count: 100}
+                  { label: 'beers', count: 1, value: 1}, 
+                  { label: 'miles', count: 1, value: 1},
+                  { label: 'empty', count: 100, value: 100}
                 ]; 
         $(window).on('load', function() {
             $.ajax({
@@ -32,12 +32,16 @@
                     console.log(data);
                     dataset[0].count = data[0].beers.drank;
                     dataset[1].count = data[0].exercise.miles;
+                    dataset[0].value = 100 / data[0].beers.drank;
+                    dataset[1].value = 100 / data[0].exercise.miles;
+
                     $("#user-height").append("<span>" + data[0].height.feet + " " + data[0].height.inches + " " + "</span>");
                     $("#user-weight").append("<span>" + data[0].weight + "</span>");
                     $("#user-age").append("<span>" + data[0].age + "</span>");
                     $("#user-activity").append("<span>" + data[0].activity.activityLevel + "</span>");
                     $(".miles-text").text("Miles: " + data[0].exercise.miles);
                     $(".beer-text").text("Beers: " + data[0].beers.drank);
+                    drawChart();
                 }
             });
         });
@@ -51,7 +55,7 @@
             var color = d3.scale.category20();
 
             var pie = d3.layout.pie()
-                .value(function(d) { return d.count; })
+                .value(function(d) { return d.value; })
                 .sort(null);
 
             var arc = d3.svg.arc()
@@ -105,7 +109,7 @@
 
         });
         }
-        drawChart();
+        
         //resize chart to window
         
 
