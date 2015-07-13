@@ -4,9 +4,9 @@ var User = require('../models/user');
 var moment = require('moment');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 //get all users
 router.get('/info', function(req, res) {
@@ -26,6 +26,16 @@ router.get('/info/:facebook_uid', function(req, res) {
     res.json(data);
   });
 });
+
+
+router.get('/:facebook_uid', function(req, res) {
+  User.find(req.params.facebook_uid, function(err, data) {
+    if (err) res.status(500).send('error');
+    if (!data) res.status(500).send('data error');
+    res.json(data);
+  });
+});
+
 
 //store user info
 router.post('/info/:facebook_uid', function(req, res) {
@@ -76,7 +86,7 @@ router.put('/info/:facebook_uid', function(req, res) {
       user.age = req.body.age;
       user.exercise.miles = req.body.miles;
       user.exercise.time = req.body.time;
-      user.beers.drank = req.body.beers;
+      user.beers.drank = req.body.beers.drank;
       user.activity.activityLevel = req.body.activityLevel;
       user.activity.activityValue = req.body.activityValue;
       user.calories.earned = user.caloriesCreatedByBeer(user, function(err, data) {

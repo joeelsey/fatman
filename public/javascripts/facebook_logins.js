@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $.ajaxSetup({
         cache: true
     });
@@ -16,11 +17,15 @@ $(document).ready(function() {
 
         function fatmanSignIn(facebookUid) {
             FB.api('/me', function(graphApiResponse) {
+                console.log('graphApiResponse', graphApiResponse);
                 var user = {
-                    facebook_uid: facebookUid,
+                    facebook_uid: graphApiResponse.id,
                     name: graphApiResponse.name
                 };
                 console.log("Posting data: ", user);
+
+
+
                 $.get("/users/info/" + user.facebook_uid, function(data) {
                     if (data.length === 0) {
                         $.post('/users/signin', user, function(data) {
@@ -50,6 +55,7 @@ $(document).ready(function() {
             if (statusResponse.status === 'connected') {
                 var facebookUid = statusResponse.authResponse.userID;
                 fatmanSignIn(facebookUid);
+                console.log('response status');
             } else {
                 FB.login(function(loginResponse) {
                     if (loginResponse.authResponse) {

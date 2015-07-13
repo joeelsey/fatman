@@ -10,6 +10,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 
+var facebookLogin = require('./lib/login');
+
+// console.log('facebookLogin', facebookLogin);
+
 var app = express();
 var mongoose = require('mongoose');
 var aws = require('aws-sdk');
@@ -30,9 +34,6 @@ console.log("S3_BUCKET: ", S3_BUCKET);
 var url = process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/fatman_dev';
 mongoose.connect(url);
 
-//local connect
-// mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/fatman_dev');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -49,6 +50,8 @@ app.use('/', routes);
 app.use('/home', routes);
 app.use('/users', users);
 app.use('/admin', admin);
+
+console.log('app js is getting called');
 
 app.get('/sign_s3', function(req, res, next){
     var s3 = new aws.S3();
