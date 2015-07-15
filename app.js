@@ -5,14 +5,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
-
-var facebookLogin = require('./lib/login');
-
-// console.log('facebookLogin', facebookLogin);
+var api = require('./routes/api');
 
 var app = express();
 var mongoose = require('mongoose');
@@ -34,6 +32,16 @@ console.log("S3_BUCKET: ", S3_BUCKET);
 var url = process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/fatman_dev';
 mongoose.connect(url);
 
+app.set('jwtSecret', process.env.JWT_SECRET || 'changethisordie');
+
+app.use(passport.initialize());
+
+require('./lib/passport')(passport);
+var jwtauth = require('./lib/jwt_auth')(app.get('jwtSecret'));
+
+require('./routes/api.js')(app, passport);
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -46,8 +54,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/home', routes);
+app.use('/api', api);
 app.use('/users', users);
 app.use('/admin', admin);
 

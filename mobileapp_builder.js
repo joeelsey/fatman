@@ -1,6 +1,6 @@
 var jade = require('jade');
 var async  = require('async');
-var fs = require('fs')
+var fs = require('fs');
 var options = {
 	filename: "fatman"
 };
@@ -8,10 +8,10 @@ var locals = {};
 var outputDirr = __dirname + '/' + 'cordova_files';
 var assetsRootFolder = __dirname + '/' + 'public/';
 var assetsFolders = ["images", "javascripts", "stylesheets"];
-var excludeFilesAndFolders = ["admin", ".DS_Store"]
+var excludeFilesAndFolders = ["admin", ".DS_Store"];
 
 function createOutputFolder(callback){
-	fs.mkdir(outputDirr, callback)
+	fs.mkdir(outputDirr, callback);
 }
 
 function writeFile(path, data, callback){
@@ -42,14 +42,14 @@ function processTemplates(callback){
 						callback(err);
 					}
 					else{
-						writeFile(outputFilename, html,callback)
+						writeFile(outputFilename, html,callback);
 					}
-				})
+				});
 			}
 			else{
-				writeFile(outputFilename, html,callback)
+				writeFile(outputFilename, html,callback);
 			}
-		})
+		});
 	});
 }
 
@@ -75,7 +75,7 @@ function readAssetsFolder(folderName, callback){
 				else{
 					readAndMoveFromFolder(folderName,fromFolderPath, callback);
 				}
-			})
+			});
 		}
 	});
 }
@@ -86,7 +86,7 @@ function readAndMoveFromFolder(folderName,folderPath, callback){
 			callback(err);
 		}
 		else{
-			copyAssetsFolderToCordova(folderName,folderPath, files,callback)
+			copyAssetsFolderToCordova(folderName,folderPath, files,callback);
 		}
 	});
 }
@@ -99,15 +99,15 @@ function copyAssetsFolderToCordova(folderName,folderPath,files, callback){
 			console.log("About to move file: ", filePath);
 			fs.readFile(filePath, function (err, data) {
 			  if (err){
-			  	callback(err)
+			  	callback(err);
 			  }
 			  else{
 			  	var outputFilename = outputDirr + '/' + folderName + '/' + fileName;
-			  	writeFile(outputFilename, data,callback)
+			  	writeFile(outputFilename, data,callback);
 			  }
 			});
 		}
-	},callback)
+	},callback);
 }
 
 function startProcessing(){
