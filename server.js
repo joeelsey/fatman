@@ -9,8 +9,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
 var admin = require('./routes/admin');
 
 var aws = require('aws-sdk');
@@ -35,6 +33,7 @@ require('./lib/passport')(passport);
 var jwtauth = require('./lib/jwt_auth')(app.get('jwtSecret'));
 
 require('./routes/api.js')(app, passport);
+require('./routes/index.js')(app, jwtauth);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
