@@ -26,7 +26,7 @@
                 ]; 
         $(window).on('load', function() {
             $.ajax({
-                url: '/users/info',
+                url: '/user',
                 type: 'GET',
                 async: false,
                 success: function(data) {
@@ -43,6 +43,9 @@
                     $(".miles-text").text("Miles: " + data[0].exercise.miles);
                     $(".beer-text").text("Beers: " + data[0].beers.drank);
                     drawChart();
+                },
+                error: function(data) {
+                  console.log(data);
                 }
             });
         });
