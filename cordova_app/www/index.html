@@ -1,0 +1,356 @@
+<!DOCTYPE html><html><head><title></title><link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"><link rel="stylesheet" href="css/style.css"><script src="http://d3js.org/d3.v3.min.js"></script><script src="http://code.jquery.com/jquery-1.11.1.min.js"></script><script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script><script src="http://d3js.org/d3.v3.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.0.0/mustache.min.js"></script><script src="js/jqm_inits.js"></script><script src="js/user.js"></script><script src="js/facebook_logins.js"></script><script src="js/fitness_donut.js"></script><script src="js/buttons.js"></script><script src="js/main_page.js"></script></head><body><div id = "login-page" data-role="page" data-theme = "a">
+	<div data-role="header" data-theme = "b">
+		<h1>Fatman</h1>
+		<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+	</div><!-- /header -->
+
+	<div id = "login-content" role="main" class="ui-content">
+		<img src="img/logo.png" id = "logo">
+		<button disabled="" id = "fb-loging-btn">Login with Facebook</button>
+	</div><!-- /content -->
+</div><!-- /page --><div id = "main-page" data-role="page" data-theme = "a">
+	<div data-role="header" data-theme = "b">
+		<h1>Fatman</h1>
+    <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a>
+		<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+	</div><!-- /header -->
+
+	<div id = "run-content" class="action ui-content">
+		<h1>Run</h1>	
+	</div>
+	<div id = "user-beer-data" data-role="header">
+		<h1 id = "user-data">
+			<span id = "user-name"></span>
+			<span id = "user-beer"></span>
+		</h1>
+	</div><!-- /header -->
+	<div id = "drink-content" class="action ui-content" >
+		<h1>Drink</h1>
+	</div>
+</div><!-- /page --><div data-role="panel" id="menu-panel" data-position="right" data-display="reveal" data-theme="a">
+	<ul data-role="listview">
+    	<li><a href="#login-page">Home</a></li>
+    	<li><a href="#intro">Intro</a></li>
+        <li><a href="#height">Height</a></li>
+        <li><a href="#weight">Weight</a></li>
+        <li><a href="#birthday">Birthday</a></li>
+        <li><a href="#activity">Activity</a></li>
+        <li><a href="#run">Run</a></li>
+        <li><a href="#beers">Beers</a></li>
+        <li><a href="#fitness-donut">Fitness</a></li>
+        <li><a href="#coupon">Coupon</a></li>
+        <li><a href="#admin-page">Admin</a></li>
+	</ul>
+</div><div id="intro" data-role="page" data-theme="a">
+	<div data-role="header" data-theme="b" data-add-back-btn="true">
+		<h1>Fatman</h1>
+    <!-- <a data-role="button" data-rel="back" class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+		<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+	</div><!-- /header -->
+  <div data-role="header">
+    OPTIMIZE YOUR PROFILE
+  </div>
+
+  <div role="main" class="ui-content">
+    If you give Fatman a little more info we'll be able to provide you with more accurate data.
+    </br>
+    Sweet Huh?
+    </br>
+    <form>
+      <span>Are you a guy or a gal?</span>
+       <fieldset data-role="controlgroup">
+        <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
+        <label for="checkbox-v-2a">MALE</label>
+        <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
+        <label for="checkbox-v-2b">FEMALE</label>
+    </form>
+  </div>
+
+  
+
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id = "intro-btn">NEXT</a>
+  </div>
+</div><div id="height" data-role="page" data-theme="a">
+  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <!-- <a data-role="button" data-rel="back" class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div class="ui-content">
+    <h1>MY HEIGHT</h1>
+    <form method="post" action="">
+      <div class="inc button">+</div>
+      <input type="text" name="height" id="height-feet" value="1">
+      <div class="dec button">-</div>
+      <label for="name">FEET</label>
+    </form>
+    <form method="post" action="">
+      <div class="inc button">+</div>
+      <input type="text" name="height" id="height-inches" value="1">
+      <div class="dec button">-</div>
+      <label for="name">INCHES</label>
+    </form>
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id = "height-btn">NEXT</a>
+  </div>
+</div><div id="weight" data-role="page" data-theme="a">
+	<div data-role="header" data-theme = "b" data-add-back-btn="true">
+		<h1>Fatman</h1>
+    <!-- <a data-role="button" data-rel="back" class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+		<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+	</div><!-- /header -->
+  <div class="ui-content">
+    <h1>MY WEIGHT</h1>
+    <form method="post" action="">
+      <div class="inc button">+</div>
+      <input type="text" name="weight" id="weight-lbs" value="100">
+      <div class="dec button">-</div>
+      <label for="name">LBS</label>
+    </form>
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id="weight-btn">NEXT</a>
+  </div>
+</div><div id="birthday" data-role="page" data-theme="a">
+  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div class="ui-content">
+    <h1>MY BIRTHDAY</h1>
+    <form method="post" action="">
+      <div class="inc button">+</div>
+      <input type="text" name="day" id="birthday-day" value="1">
+      <div class="dec button">-</div>
+      <label for="name">DAY</label>
+    </form>
+    <form method="post" action="">
+      <div class="inc button">+</div>
+      <input type="text" name="month" id="birthday-month" value="1">
+      <div class="dec button">-</div>
+      <label for="name">MONTH</label>
+    </form>
+    <form method="post" action="">
+      <div class="inc button">+</div>
+      <input type="text" name="year" id="birthday-year" value="2000">
+      <div class="dec button">-</div>
+      <label for="name">YEAR</label>
+    </form>
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id = "birthday-btn">NEXT</a>
+  </div>
+</div><div id="run" data-role="page" data-theme="a">
+  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div class="ui-content">
+    <h1>RUNNING TIME</h1>
+    <form method="post" action="">
+      <div class="inc button">+</div>
+      <input type="text" name="hours" id="run-hours" value="1">
+      <div class="dec button">-</div>
+      <label for="name">HOURS</label>
+    </form>
+    <span>:</span>
+    <form method="post" action="">
+      <div class="inc minute-button" name="minutes" id="minutes">+</div>
+      <input type="text" name="minutes" id="run-minutes" value="00">
+      <div class="dec minute-button" name="minutes" id="minutes">-</div>
+      <label for="name">MINUTES</label>
+    </form>
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id = "run-btn">NEXT</a>
+  </div>
+</div><div id="beers" data-role="page" data-theme="a">
+  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div class="ui-content">
+    <h1>BEERS CONSUMED</h1>
+    <form method="post">
+      <div class="inc button">+</div>
+      <input type="text" name="hours" id="beers-drank" value="1">
+      <div class="dec button">-</div>
+      <label for="name">QUANTITY</label>
+    </form>
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id = "beer-btn">NEXT</a>
+  </div>
+</div><div id="fitness-donut" data-role="page" data-theme="a" class="fitness-donut">
+  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div class="ui-content">
+    <h1>FITNESS LEVEL</h1>
+     <div id="donut-chart"></div>
+      <p><span id="user-height">Height: </span></p>
+      <p><span id="user-weight">Weight: </span></p>
+      <p><span id="user-age">Age: </span></p>
+      <p><span id="user-activity">Activty: </span></p>
+  </div>
+  <div data-role="footer" data-position="fixed"> 
+    <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
+  </div>
+    <script type="text/javascript">
+        var user, userBeers, userMiles, dataset;
+        
+        dataset = [
+                  { label: 'beers', count: 1}, 
+                  { label: 'miles', count: 1},
+                  { label: 'empty', count: 100}
+                ]; 
+        $(window).on('load', function() {
+            $.ajax({
+                url: '/users/info',
+                type: 'GET',
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    dataset[0].count = data[0].beers || 1;
+                    dataset[1].count = data[0].miles || 1;
+                    $("#user-height").append("<span>" + data[0].height.feet + " " + data[0].height.inches + " " + "</span>");
+                    $("#user-weight").append("<span>" + data[0].weight + "</span>");
+                    $("#user-age").append("<span>" + data[0].age + "</span>");
+                    $("#user-activity").append("<span>" + data[0].activity.activityLevel + "</span>");
+                    $(".miles-text").text("Miles: " + data[0].exercise.miles);
+                    $(".beer-text").text("Beers: " + data[0].beers.drank);
+                }
+            });
+        });
+        
+
+        function drawChart() {
+            var width = 300,
+            height = 300,
+            radius = Math.min(width, height) / 2;
+
+            var color = d3.scale.category20();
+
+            var pie = d3.layout.pie()
+                .value(function(d) { return d.count; })
+                .sort(null);
+
+            var arc = d3.svg.arc()
+                .innerRadius(radius - 50)
+                .outerRadius(radius - 20);
+
+            var svg = d3.select("#donut-chart").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", "0 0" + " " + height + " " + width)
+                .attr("preserveAspectRatio", "xMidYMid")
+                .append("g")
+                .attr("class", "donut")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+            var path = svg.selectAll("path")
+                .data(pie(dataset))
+                .enter().append("path")
+                .attr("fill", function(d, i) { return color(i); })
+                .attr("d", arc);
+
+            var beertext = d3.select("g")
+                         .datum(dataset)
+                         .append("text")
+                         .attr("class", "beer-text")
+                         .attr("id", "beer-text")
+                         .attr("transform", "translate(" + -40 + "," + -30 + ")")
+                         .text(function(p, i) {
+                            var str = p[1].label;
+                            return str.toUpperCase() + ":" + " " + p[1].count;
+                         })
+                         .style("text-align", "center")
+                         .style("fill", "#333");
+            var milestext = d3.select("g")
+                         .datum(dataset)
+                         .append("text")
+                         .attr("class", "miles-text")
+                         .attr("id", "miles-text")
+                         .attr("transform", "translate(" + -40 + "," + 10 + ")")
+                         .text(function(p, i) {
+                            var str = p[0].label;
+                            return str.toUpperCase() + ":" + " " + p[0].count;
+                         })
+                         .style("text-align", "center")
+                         .style("fill", "#333");
+            var aspect = height / width, chart = $("#donut-chart");
+            $(window).on("resize", function() {
+                var targetWidth = chart.parent().width();
+                chart.attr("width", targetWidth);
+                chart.attr("height", targetWidth / aspect);
+
+        });
+        }
+        drawChart();
+        //resize chart to window
+        
+
+    </script>
+</div><div id="activity" data-role="page" data-theme="a">
+  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div class="ui-content">
+    <h1>CHOOSE YOUR LEVEL OF ACTIVITY</h1>
+      <label for="select-native-17">Level Of Activity</label>
+    <select name="select-native-17" id="select-native-1" onchange="activity(this.value)">
+      <option name="Sedentary" value="1.2">Sedentary (little or no exercise)</option>
+      <option name="Lightly" value="1.375">Lightly active (light exercise/sports 1­ to 3 days/week)</option>
+      <option name="Moderate" value="1.55">Moderately active (moderate exercise/sports 3­ to 5 days/week)</option>
+      <option name="Very-Active" value="1.725">Very active (hard exercise/sports 6­ to 7 days a week)</option>
+      <option name="Extra-Active" value="1.95">Extra active (very hard exercise/sports & physical job or 2x/day training)</option>
+    </select>
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id="activity-btn">NEXT</a>
+  </div>
+  <script type="text/javascript">
+    function activity(value) {
+      console.log(value);
+      return value;
+    }
+  </script>
+</div><div id = "coupon" data-role="page" data-theme = "a">
+  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div>
+
+  <div id = "login-content" role="main" class="ui-content">
+    <div>Thanks for using FATMAN. Here's a $1.00 off a beer coupon at the Hop & The Hound.  Expires 5/24/15.</div>
+    <a id="coupon-code" target="_blank" href="http://www.thehopandhound.com/"><img style='width:100%;' border="0" alt="Null" src="http://static1.squarespace.com/static/5331eadce4b06945e5d0061f/t/53a9a065e4b07db90f7da734/1403625573685/Home+Banner?format=1000w"></a>
+    <img src="img/logo.png" id = "logo">
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#login-page" data-role="button" style="width: 80%;" id="coupon-button">USE COUPON</a>
+  </div>
+</div><div id="admin-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="b" data-add-back-btn="true">
+    <h1>Fatman</h1>
+    <!-- <a data-role="button" data-rel="back" class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
+    <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
+  </div><!-- /header -->
+  <div data-role="header">
+    ADMIN OPTIONS
+  </div>
+  <label>UPLOAD COUPON</label>
+  <input type="file" id="coupon-input"></input>
+
+  <div data-role="footer" class="ui-bar" data-position="fixed"> 
+    <a href="#" data-role="button" style="width: 80%;" id = "admin-btn">SAVE</a>
+  </div>
+</div></body></html>

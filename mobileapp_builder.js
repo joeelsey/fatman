@@ -5,9 +5,9 @@ var options = {
 	filename: "fatman"
 };
 var locals = {};
-var outputDirr = __dirname + '/' + 'cordova_files';
-var assetsRootFolder = __dirname + '/' + 'public/';
-var assetsFolders = ["images", "javascripts", "stylesheets"];
+var outputDirr = __dirname + '/cordova_app/www';
+var assetsRootFolder = __dirname + '/public/';
+var assetsFolders = ["img", "js", "css"];
 var excludeFilesAndFolders = ["admin", ".DS_Store"]
 
 function createOutputFolder(callback){
@@ -60,7 +60,6 @@ function processAssets(callback){
 function readAssetsFolder(folderName, callback){
 	var fromFolderPath = assetsRootFolder + folderName;
 	var toFolderPath = outputDirr + '/' + folderName;
-	console.log("About to copy assets files from folder: ",folderName);
 	fs.exists(toFolderPath,function(exists){
 		if(exists){
 			readAndMoveFromFolder(folderName,fromFolderPath, callback);
@@ -93,10 +92,8 @@ function readAndMoveFromFolder(folderName,folderPath, callback){
 
 function copyAssetsFolderToCordova(folderName,folderPath,files, callback){
 	async.each(files, function(fileName, callback){
-		console.log(fileName);
 		if(excludeFilesAndFolders.indexOf(fileName) < 0){
 			var filePath = folderPath + "/" + fileName;
-			console.log("About to move file: ", filePath);
 			fs.readFile(filePath, function (err, data) {
 			  if (err){
 			  	callback(err)
