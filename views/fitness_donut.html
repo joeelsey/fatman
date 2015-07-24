@@ -12,44 +12,63 @@
       <p><span id="user-weight">Weight: </span></p>
       <p><span id="user-age">Age: </span></p>
       <p><span id="user-activity">Activity: </span></p>
+      <p><span id="user-rating">Rating: </span></p>
+  </div>
+  <div>
+    <button id="fitness-btn">FITNESS RATING</button>
   </div>
   <div data-role="footer" data-position="fixed"> 
     <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
   </div>
     <script type="text/javascript">
-        var user, userBeers, userMiles, dataset;
+        var user, userBeers, userMiles, dataset, accessToken;
+        accessToken = window.sessionStorage.jwt
         
         dataset = [
                   { label: 'beers', count: 1, value: 1}, 
                   { label: 'miles', count: 1, value: 1},
                   { label: 'empty', count: 100, value: 100}
-                ]; 
-        $(window).on('load', function() {
-            $.ajax({
-                url: '/user',
-                type: 'GET',
-                async: false,
-                success: function(data) {
-                    console.log(data);
-                    dataset[0].count = data[0].beers.drank;
-                    dataset[1].count = data[0].exercise.miles;
-                    dataset[0].value = 100 / data[0].beers.drank;
-                    dataset[1].value = 100 / data[0].exercise.miles;
+                ];
+        $('#fitness-btn').on('click', function() {
+          $.ajax({
+            url: '/user/fitness',
+            type: 'PUT',
+            headers: {'jwt': accessToken},
+            contentType: 'application/json',
+            success: function(data) {
+              console.log(data);
+              $("#user-rating").append("<span>" + data.rating + "</span>");
+            }
+          });
+        });
 
-                    $("#user-height").append("<span>" + data[0].height.feet + " " + data[0].height.inches + " " + "</span>");
-                    $("#user-weight").append("<span>" + data[0].weight + "</span>");
-                    $("#user-age").append("<span>" + data[0].age + "</span>");
-                    $("#user-activity").append("<span>" + data[0].activity.activityLevel + "</span>");
-                    $(".miles-text").text("Miles: " + data[0].exercise.miles);
-                    $(".beer-text").text("Beers: " + data[0].beers.drank);
-                    drawChart();
-                },
-                error: function(data) {
-                  console.log(data);
-                }
+        $(function() {
+            $.ajax({
+              url: '/user',
+              method: 'GET',
+              headers: {'jwt': accessToken},
+              contentType: 'application/json',
+              async: false,
+              success: function(data) {
+                  console.log('d3: ', data);
+                  dataset[0].count = data.beers.drank;
+                  dataset[1].count = data.exercise.miles;
+                  dataset[0].value = 100 / data.beers.drank;
+                  dataset[1].value = 100 / data.exercise.miles;
+
+                  $("#user-height").append("<span>" + data.height.feet + " " + data.height.inches + " " + "</span>");
+                  $("#user-weight").append("<span>" + data.weight + "</span>");
+                  $("#user-age").append("<span>" + data.age + "</span>");
+                  $("#user-activity").append("<span>" + data.activity.activityLevel + "</span>");
+                  $(".miles-text").text("Miles: " + data.exercise.miles);
+                  $(".beer-text").text("Beers: " + data.beers.drank);
+                  drawChart();
+              },
+              error: function(data) {
+                console.log(data);
+              }
             });
         });
-        
 
         function drawChart() {
             var width = 300,
@@ -110,9 +129,7 @@
                 var targetWidth = chart.parent().width();
                 chart.attr("width", targetWidth);
                 chart.attr("height", targetWidth / aspect);
-
             });
         }
-        
     </script>
 </div>

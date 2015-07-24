@@ -114,7 +114,7 @@ module.exports = function(app, jwtauth) {
     User.findOne({_id: req.user._id}, function(err, user) {
       if (err) return res.status(500).send(err);
       if (!user) return res.status(500).send({msg: 'user not found'});
-      user.beers.drank = req.body.beers.drank;
+      user.beers.drank = req.body.beers;
      
       user.save(function(err, data) {
         if (err) return res.status(500).send('err', err);

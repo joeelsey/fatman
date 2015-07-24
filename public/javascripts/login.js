@@ -16,6 +16,7 @@ $(document).ready(function() {
       contentType: 'application/json',
       success: function(data) {
         console.log(data);
+        window.sessionStorage.jwt = data.jwt;
         $.mobile.changePage('#main-page', {
           transition: 'slide',
           changeHash: false
@@ -41,6 +42,7 @@ $(document).ready(function() {
       contentType: 'application/json',
       success: function(data) {
         console.log(data);
+        window.sessionStorage.jwt = data.jwt;
         $.mobile.changePage('#main-page', {
           transition: 'slide',
           changeHash: false

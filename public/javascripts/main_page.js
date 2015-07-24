@@ -1,51 +1,79 @@
 $(document).ready(function() {
-	//button on click events update the user information on the front end and back.
+	var currentUser;
+	var accessToken = window.sessionStorage.jwt;
+
+	if (accessToken) {
+		$.mobile.changePage('#main-page', {
+      transition: 'slide',
+      changeHash: false
+    });
+	} else {
+		$.mobile.changePage('#login-page', {
+      transition: 'slide',
+      changeHash: false
+    });
+	}
 
 	$("#run-content").on("click", function(e){
 		e.preventDefault();
-		if(!currentUser.dataSeted){
-			$.mobile.changePage( "#intro", { transition: "slide", changeHash: false });
-		}
-		else{
-			$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
-		}
+		$.ajax({
+      method: 'GET',
+      url: '/user',
+      headers: {'jwt': accessToken},
+      contentType: 'application/json',
+      success: function(data) {
+        console.log(data);
+        currentUser = data;
+      },
+      error: function(data) {
+        console.log('error', data);
+      }
+    });
+
+		$.mobile.changePage( "#run", { transition: "slide", changeHash: false });
 	});
+
 	$("#drink-content").on("click", function(e) {
 		e.preventDefault();
-		if(!currentUser.dataSeted) {
-			$.mobile.changePage("#intro", { transition: "slide", changeHash: false});
-		} else {
-			$.mobile.changePage( "#beers", {transition: "slide", changeHash: false});
-		}
+		$.ajax({
+      method: 'GET',
+      url: '/user',
+      headers: {'jwt': accessToken},
+      contentType: 'application/json',
+      success: function(data) {
+        console.log(data);
+        currentUser = data;
+      },
+      error: function(data) {
+        console.log('error', data);
+      }
+    });
+		
+		$.mobile.changePage( "#beers", {transition: "slide", changeHash: false});
 	});
 	$("#intro-btn").on("click", function(e){
 		e.preventDefault();
-		$.get('/users/info/' + currentUser.facebook_uid, function(err, data) {
-			$("#height-feet").val(data.height.feet);
-			$("#height-feet").val(data.height.inches);
-			console.log('currentUser: ', data);
-		});
 		var male = $("#checkbox-v-2a").is(':checked');
 		var female = $("#checkbox-v-2b").is(':checked');
-		if(( male && !female ) || ( !male && female )){ //male xor female
-			if(male){
+
+		if (( male && !female ) || ( !male && female )) { //male xor female
+			if (male){
 				currentUser.sex = "male";
-			}
-			else{
+			} else {
 				currentUser.sex = "female";
 			}
 			$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: '/user/sex',
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
+				headers: {'jwt': accessToken},
 				contentType: 'application/json',
 				success: function(data) {
 					console.log(data);
 				}
 			});
 			$.mobile.changePage( "#height", { transition: "slide", changeHash: false });
-		}
-		else{
+		} else {
 			alert("You must select one gender.");
 		}
 	});
@@ -54,39 +82,41 @@ $(document).ready(function() {
 		e.preventDefault();
 		var feet = $("#height-feet").val();
 		var inches = $("#height-inches").val();
-		console.log('FEET AND INCHES', feet, inches);
+		
 		var height = {
 			feet: feet.toString(),
     	inches: inches.toString()
 		};
 		currentUser.feet = height.feet;
 		currentUser.inches = height.inches;
-		console.log("currentUser: ", currentUser.feet, currentUser.inches);
+		
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: '/user/height',
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
+				headers: {'jwt': accessToken},
 				contentType: 'application/json',
 				success: function(data) {
 					console.log(data);
 				}
-			});
+		});
 		$.mobile.changePage( "#weight", { transition: "slide", changeHash: false });
 	});
 
 	$("#weight-btn").on("click", function(e){
 		e.preventDefault(); 
 		currentUser.weight = $("#weight-lbs").val();
-		console.log("weight: ", currentUser.weight);
+		
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: '/user/weight',
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
+				headers: {'jwt': accessToken},
 				contentType: 'application/json',
 				success: function(data) {
 					console.log(data);
 				}
-			});
+		});
 		$.mobile.changePage( "#birthday", { transition: "slide", changeHash: false });
 	});
 
@@ -96,23 +126,24 @@ $(document).ready(function() {
 		var month = $("#birthday-month").val();
 		var year = $("#birthday-year").val();
 		var date = day.toString() + " " + month.toString() + " " + year.toString();
-		console.log("Date: ", date);
+
 		currentUser.date_of_birth = date;
 
 	  var birthdate = new Date(date);
-	  console.log('BIRTHDATE', birthdate);
 	  var age = moment().diff(birthdate,"years");
+
 	  currentUser.age = age.toString();
-	  console.log('currentUser age', currentUser.age);
+	  
 	  $.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: '/user/age',
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
+				headers: {'jwt': accessToken},
 				contentType: 'application/json',
 				success: function(data) {
 					console.log(data);
 				}
-			});
+		});
 		$.mobile.changePage( "#activity", { transition: "slide", changeHash: false });
 	});
 
@@ -122,19 +153,20 @@ $(document).ready(function() {
 			activityValue: $("#select-native-1").val(),
 			activityLevel: $("#select-native-1").children(":selected").attr('name')
 		};
+
 		currentUser.activityValue = activity.activityValue;
 		currentUser.activityLevel = activity.activityLevel;
-		console.log("currentUser activity level", currentUser.activityValue, currentUser.activityLevel);
-		console.log("currentUser: ", currentUser);
+
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: '/user/activity',
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
+				headers: {'jwt': accessToken},
 				contentType: 'application/json',
 				success: function(data) {
 					console.log(data);
 				}
-			});
+		});
 		$.mobile.changePage("#run", { transition: "slide", changeHash: false});
 	});
 
@@ -142,18 +174,27 @@ $(document).ready(function() {
 		e.preventDefault();
 		currentUser.hours = $("#run-hours").val();
 		currentUser.minutes = $("#run-minutes").val();
+
+		if (currentUser.minutes === '00') {
+				currentUser.minutes = '0';
+		}
+
+		var timeExercised = Number(currentUser.hours + Number(currentUser.minutes / 60)).toFixed(1);
+
 		var miles = function() {
-			var totalTime = currentUser.hours + (currentUser.minutes / 60);
+			var totalTime = Number(currentUser.hours) + Number(currentUser.minutes / 60);
   		//Eight is avg speed of a running human.
   		var miles = 8 * totalTime;
   		return miles.toFixed(2);
 		};
-		currentUser.miles = miles();
-		currentUser.time = Number(currentUser.hours + (currentUser.minutes / 60)).toFixed(1);
+
+		currentUser.miles = miles().toString();
+		currentUser.time = timeExercised.toString();
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: '/user/exercise',
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
+				headers: {'jwt': accessToken},
 				contentType: 'application/json',
 				success: function(data) {
 					console.log(data);
@@ -165,11 +206,12 @@ $(document).ready(function() {
 	$("#beer-btn").on("click", function(e) {
 		e.preventDefault();
 		currentUser.beers = $("#beers-drank").val();
-		console.log("currentUser: ", currentUser.beers);
+		
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: '/user/beers',
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
+				headers: {'jwt': accessToken},
 				contentType: 'application/json',
 				success: function(data) {
 					console.log(data);
