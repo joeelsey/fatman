@@ -1,12 +1,21 @@
-<!DOCTYPE html><html><head><title></title><link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"><link rel="stylesheet" href="css/style.css"><script src="http://d3js.org/d3.v3.min.js"></script><script src="http://code.jquery.com/jquery-1.11.1.min.js"></script><script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script><script src="http://d3js.org/d3.v3.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.0.0/mustache.min.js"></script><script src="js/jqm_inits.js"></script><script src="js/user.js"></script><script src="js/facebook_logins.js"></script><script src="js/fitness_donut.js"></script><script src="js/buttons.js"></script><script src="js/main_page.js"></script></head><body><div id = "login-page" data-role="page" data-theme = "a">
+<!DOCTYPE html><html><head><title></title><link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"><link rel="stylesheet" href="/stylesheets/style.css"><script src="http://code.jquery.com/jquery-1.11.1.min.js"></script><script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script><script src="http://d3js.org/d3.v3.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.0.0/mustache.min.js"></script><script src="/javascripts/login.js"></script><script src="/javascripts/jqm_inits.js"></script><script src="/javascripts/user.js"></script><script src="/javascripts/buttons.js"></script><script src="/javascripts/main_page.js"></script></head><body><div id = "login-page" data-role="page" data-theme = "a">
 	<div data-role="header" data-theme = "b">
 		<h1>Fatman</h1>
 		<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
 	</div><!-- /header -->
 
 	<div id = "login-content" role="main" class="ui-content">
-		<img src="img/logo.png" id = "logo">
-		<button disabled="" id = "fb-loging-btn">Login with Facebook</button>
+
+		<img src="/images/logo.png" id = "logo">
+    <form>
+      <input id="username" type="text" placeholder="email"></input>
+      <input id="password" type="password" placeholder="password"></input>
+      <button id="login-button" type="submit">Sign In</button>
+    </form>
+    
+    <button id="create-account" type="submit">Create an Account</button>
+		<!-- <button disabled="" id = "fb-loging-btn">Login with Facebook</button> -->
+
 	</div><!-- /content -->
 </div><!-- /page --><div id = "main-page" data-role="page" data-theme = "a">
 	<div data-role="header" data-theme = "b">
@@ -19,10 +28,10 @@
 		<h1>Run</h1>	
 	</div>
 	<div id = "user-beer-data" data-role="header">
-		<h1 id = "user-data">
+		<!-- <h1 id = "user-data">
 			<span id = "user-name"></span>
 			<span id = "user-beer"></span>
-		</h1>
+		</h1> -->
 	</div><!-- /header -->
 	<div id = "drink-content" class="action ui-content" >
 		<h1>Drink</h1>
@@ -187,6 +196,7 @@
     <a href="#" data-role="button" style="width: 80%;" id = "beer-btn">NEXT</a>
   </div>
 </div><div id="fitness-donut" data-role="page" data-theme="a" class="fitness-donut">
+<script src="http://d3js.org/d3.v3.min.js"></script>
   <div data-role="header" data-theme = "b" data-add-back-btn="true">
     <h1>Fatman</h1>
     <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
@@ -198,38 +208,64 @@
       <p><span id="user-height">Height: </span></p>
       <p><span id="user-weight">Weight: </span></p>
       <p><span id="user-age">Age: </span></p>
-      <p><span id="user-activity">Activty: </span></p>
+      <p><span id="user-activity">Activity: </span></p>
+      <p><span id="user-rating">Rating: </span></p>
+  </div>
+  <div>
+    <button id="fitness-btn">FITNESS RATING</button>
   </div>
   <div data-role="footer" data-position="fixed"> 
     <a href="#coupon" data-role="button" style="width: 80%;">NEXT</a>
   </div>
     <script type="text/javascript">
-        var user, userBeers, userMiles, dataset;
+        var user, userBeers, userMiles, dataset, accessToken;
+        accessToken = window.sessionStorage.jwt
         
         dataset = [
-                  { label: 'beers', count: 1}, 
-                  { label: 'miles', count: 1},
-                  { label: 'empty', count: 100}
-                ]; 
-        $(window).on('load', function() {
+                  { label: 'beers', count: 1, value: 1}, 
+                  { label: 'miles', count: 1, value: 1},
+                  { label: 'empty', count: 100, value: 100}
+                ];
+        $('#fitness-btn').on('click', function() {
+          $.ajax({
+            url: '/user/fitness',
+            type: 'PUT',
+            headers: {'jwt': accessToken},
+            contentType: 'application/json',
+            success: function(data) {
+              console.log(data);
+              $("#user-rating").append("<span>" + data.rating + "</span>");
+            }
+          });
+        });
+
+        $(function() {
             $.ajax({
-                url: '/users/info',
-                type: 'GET',
-                async: false,
-                success: function(data) {
-                    console.log(data);
-                    dataset[0].count = data[0].beers || 1;
-                    dataset[1].count = data[0].miles || 1;
-                    $("#user-height").append("<span>" + data[0].height.feet + " " + data[0].height.inches + " " + "</span>");
-                    $("#user-weight").append("<span>" + data[0].weight + "</span>");
-                    $("#user-age").append("<span>" + data[0].age + "</span>");
-                    $("#user-activity").append("<span>" + data[0].activity.activityLevel + "</span>");
-                    $(".miles-text").text("Miles: " + data[0].exercise.miles);
-                    $(".beer-text").text("Beers: " + data[0].beers.drank);
-                }
+              url: '/user',
+              method: 'GET',
+              headers: {'jwt': accessToken},
+              contentType: 'application/json',
+              async: false,
+              success: function(data) {
+                  console.log('d3: ', data);
+                  dataset[0].count = data.beers.drank;
+                  dataset[1].count = data.exercise.miles;
+                  dataset[0].value = 100 / data.beers.drank;
+                  dataset[1].value = 100 / data.exercise.miles;
+
+                  $("#user-height").append("<span>" + data.height.feet + " " + data.height.inches + " " + "</span>");
+                  $("#user-weight").append("<span>" + data.weight + "</span>");
+                  $("#user-age").append("<span>" + data.age + "</span>");
+                  $("#user-activity").append("<span>" + data.activity.activityLevel + "</span>");
+                  $(".miles-text").text("Miles: " + data.exercise.miles);
+                  $(".beer-text").text("Beers: " + data.beers.drank);
+                  drawChart();
+              },
+              error: function(data) {
+                console.log(data);
+              }
             });
         });
-        
 
         function drawChart() {
             var width = 300,
@@ -239,7 +275,7 @@
             var color = d3.scale.category20();
 
             var pie = d3.layout.pie()
-                .value(function(d) { return d.count; })
+                .value(function(d) { return d.value; })
                 .sort(null);
 
             var arc = d3.svg.arc()
@@ -290,13 +326,8 @@
                 var targetWidth = chart.parent().width();
                 chart.attr("width", targetWidth);
                 chart.attr("height", targetWidth / aspect);
-
-        });
+            });
         }
-        drawChart();
-        //resize chart to window
-        
-
     </script>
 </div><div id="activity" data-role="page" data-theme="a">
   <div data-role="header" data-theme = "b" data-add-back-btn="true">

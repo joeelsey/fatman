@@ -1,4 +1,6 @@
-$(document).ready(function() {
+document.addEventListener('deviceready', initApp, false);
+
+function initApp() {
     $.ajaxSetup({
         cache: true
     });
@@ -62,4 +64,5 @@ $(document).ready(function() {
             }
         });
     });
-});
+};
+

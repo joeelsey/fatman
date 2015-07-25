@@ -1,10 +1,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var moment = require('moment');
+var bcrypt = require('bcrypt-nodejs');
+var jwt = require('jwt-simple');
 var BEER_CALORIES = 156;
 var RUNNING_CALORIES = 105;
+var expires = moment().add(7, 'days').valueOf();
 
 var userSchema = mongoose.Schema({
+  basic: {
+    email: String,
+    password: String
+  },
 	facebook_uid: String,
   name: String,
   sex: String,
@@ -35,6 +42,23 @@ var userSchema = mongoose.Schema({
   rating: String,
   coupons: []
 });
+
+userSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+userSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.basic.password);
+};
+
+userSchema.methods.generateToken = function(secret) {
+  var _this = this;
+  var token = jwt.encode({
+    iss: _this._id,
+    exp: expires
+  }, secret);
+  return token;
+};
 
 userSchema.methods.userAge = function(birthday) {
   var date = new Date(birthday);
@@ -73,7 +97,11 @@ userSchema.methods.numberOfMilesEarned = function(user) {
 };
 
 userSchema.methods.numberOfBeersEarned = function(user) {
+  console.log('NUMBER OF BEERS EARNED', user.calories.earned, user.calories.burned);
   var beers = Math.round(Number(user.calories.earned) / Number(user.calories.burned));
+  if(beers < 0){
+    beers = 0;
+  }
   return beers.toString();
 };
 
@@ -89,12 +117,12 @@ userSchema.methods.caloriesBurnedByRunning = function (user) {
   var roundedSpeed = closestSpeed(speed);
   var weight = Number(user.weight * 0.45359237);
   met = getMet(roundedSpeed);
-  calories = cckg(weight,met,time);
+  calories = cckg(weight,met, Number(user.exercise.time));
   
   /***Helpers functions***/
   function cckg(w,met,t){ 
     var kg = w*0.45359237;
-    return Math.round(met * 3.5 * (kg) / 200 * time);
+    return Math.round(met * 3.5 * (kg) / 200 * Number(user.exercise.time));
   }
 
   function closestSpeed(num) {  

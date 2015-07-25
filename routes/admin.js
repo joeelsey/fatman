@@ -20,15 +20,15 @@ router.get('/coupons', function(req, res) {
 
 router.get('/coupons/new', function(req, res){
 	res.render('coupons/new', { title: 'Admin' });
-})
+});
 
 router.post('/coupons', function(req, res){
 	var coupon = new Coupon();
   console.log("req.body: ", req.body);
-	coupon.name = req.body.name
-	coupon.location = req.body.location
-	coupon.expiration = req.body.expiration
-	coupon.imageUrl = req.body.image_url
+	coupon.name = req.body.name;
+	coupon.location = req.body.location;
+	coupon.expiration = req.body.expiration;
+	coupon.imageUrl = req.body.image_url;
 
 	coupon.save(function(err, data) {
     if (err) return res.status(500).send('error');
