@@ -38,10 +38,6 @@ app.use(passport.initialize());
 
 require('./lib/passport')(passport);
 var jwtauth = require('./lib/jwt_auth')(app.get('jwtSecret'));
-
-require('./routes/api.js')(app, passport);
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -54,8 +50,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/api', api);
+//app.use('/', routes);
+//app.use('/api', api);
+
+api(app, passport);
+routes(app, passport)
 app.use('/users', users);
 app.use('/admin', admin);
 
