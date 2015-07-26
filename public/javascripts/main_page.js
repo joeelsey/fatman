@@ -72,6 +72,7 @@ $(document).ready(function() {
 					console.log(data);
 				}
 			});
+
 			$.mobile.changePage( "#height", { transition: "slide", changeHash: false });
 		} else {
 			alert("You must select one gender.");
@@ -128,11 +129,6 @@ $(document).ready(function() {
 		var date = day.toString() + " " + month.toString() + " " + year.toString();
 
 		currentUser.date_of_birth = date;
-
-	  var birthdate = new Date(date);
-	  var age = moment().diff(birthdate,"years");
-
-	  currentUser.age = age.toString();
 	  
 	  $.ajax({
 				url: '/user/age',
@@ -175,21 +171,6 @@ $(document).ready(function() {
 		currentUser.hours = $("#run-hours").val();
 		currentUser.minutes = $("#run-minutes").val();
 
-		if (currentUser.minutes === '00') {
-				currentUser.minutes = '0';
-		}
-
-		var timeExercised = Number(currentUser.hours + Number(currentUser.minutes / 60)).toFixed(1);
-
-		var miles = function() {
-			var totalTime = Number(currentUser.hours) + Number(currentUser.minutes / 60);
-  		//Eight is avg speed of a running human.
-  		var miles = 8 * totalTime;
-  		return miles.toFixed(2);
-		};
-
-		currentUser.miles = miles().toString();
-		currentUser.time = timeExercised.toString();
 		$.ajax({
 				url: '/user/exercise',
 				type: 'PUT',

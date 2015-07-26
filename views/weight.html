@@ -1,5 +1,5 @@
 <div id="weight" data-role="page" data-theme="a">
-	<div data-role="header" data-theme = "b" data-add-back-btn="true">
+	<div data-role="header" data-theme = "b">
 		<h1>Fatman</h1>
     <!-- <a data-role="button" data-rel="back" class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
 		<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
@@ -16,4 +16,22 @@
   <div data-role="footer" class="ui-bar" data-position="fixed"> 
     <a href="#" data-role="button" style="width: 80%;" id="weight-btn">NEXT</a>
   </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.ajax({
+          method: 'GET',
+          url: '/user',
+          headers: {'jwt': accessToken},
+          contentType: 'application/json',
+          success: function(data) {
+            console.log('GET height', data);
+            $('#height-feet').val(data.height.feet);
+            $('#height-inches').val(data.height.inches);
+          },
+          error: function(data) {
+            console.log('error', data);
+          }
+        });
+    });
+  </script>
 </div>
