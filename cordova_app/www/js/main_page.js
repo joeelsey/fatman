@@ -30,7 +30,7 @@ $(document).ready(function() {
 				currentUser.sex = "female";
 			}
 			$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: 'https://fatman-dev.herokuapp.com/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
 				contentType: 'application/json',
@@ -56,7 +56,7 @@ $(document).ready(function() {
 		currentUser.height = height;
 		console.log("currentUser: ", currentUser.height);
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: 'https://fatman-dev.herokuapp.com/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
 				contentType: 'application/json',
@@ -72,7 +72,7 @@ $(document).ready(function() {
 		currentUser.weight = $("#weight-lbs").val();
 		console.log("weight: ", currentUser.weight);
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: 'https://fatman-dev.herokuapp.com/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
 				contentType: 'application/json',
@@ -97,7 +97,7 @@ $(document).ready(function() {
 	  currentUser.age = age.toString();
 	  console.log('currentUser age', currentUser.age);
 	  $.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: 'https://fatman-dev.herokuapp.com/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
 				contentType: 'application/json',
@@ -121,7 +121,7 @@ $(document).ready(function() {
 		currentUser.miles = miles();
 		currentUser.time = Number(currentUser.hours + (currentUser.minutes / 60)).toFixed(1);
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: 'https://fatman-dev.herokuapp.com/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
 				contentType: 'application/json',
@@ -137,7 +137,7 @@ $(document).ready(function() {
 		currentUser.beers = $("#beers-drank").val();
 		console.log("currentUser: ", currentUser);
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: 'https://fatman-dev.herokuapp.com/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
 				contentType: 'application/json',
@@ -158,7 +158,7 @@ $(document).ready(function() {
 		console.log("currentUser activity level", currentUser.activity.activityValue, currentUser.activity.activityLevel);
 		console.log("currentUser: ", currentUser);
 		$.ajax({
-				url: '/users/info/' + currentUser.facebook_uid,
+				url: 'https://fatman-dev.herokuapp.com/users/info/' + currentUser.facebook_uid,
 				type: 'PUT',
 				data: JSON.stringify(currentUser),
 				contentType: 'application/json',

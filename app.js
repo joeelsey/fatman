@@ -54,7 +54,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/api', api);
 
 api(app, passport);
-routes(app, passport)
+console.log(passport);
+routes(app, passport.Authenticator)
 app.use('/users', users);
 app.use('/admin', admin);
 
