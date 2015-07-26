@@ -90,9 +90,13 @@ module.exports = function(app, jwtauth) {
       if (!user) return res.status(500).send({msg: 'user not found'});
       var hours = req.body.hours;
       var minutes = req.body.minutes;
-      
-      var timeExercised = Number(hours) + Number(parseInt(minutes, 10) / 60);
-      timeExercised.toFixed(1);
+
+      var timeExercised = function() {
+        var timeSpent = Number(hours) + Number(parseInt(minutes, 10) / 60);
+        return timeSpent.toFixed(2);
+      };
+
+      console.log('timeExercised', timeExercised());
 
       var miles = function() {
         var totalTime =  Number(hours) + Number(parseInt(minutes, 10) / 60);
@@ -103,7 +107,7 @@ module.exports = function(app, jwtauth) {
       };
 
       user.exercise.miles = miles();
-      user.exercise.time = timeExercised.toString();
+      user.exercise.time = timeExercised();
      
       user.save(function(err, data) {
         if (err) return res.status(500).send('err', err);

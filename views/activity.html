@@ -1,5 +1,5 @@
 <div id="activity" data-role="page" data-theme="a">
-  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+  <div data-role="header" data-theme = "b">
     <h1>Fatman</h1>
     <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
     <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
@@ -19,9 +19,26 @@
     <a href="#" data-role="button" style="width: 80%;" id="activity-btn">NEXT</a>
   </div>
   <script type="text/javascript">
+    var accessToken = window.sessionStorage.jwt;
     function activity(value) {
       console.log(value);
       return value;
     }
+
+    $(document).ready(function() {
+      $.ajax({
+        method: 'GET',
+        url: '/user',
+        headers: {'jwt': accessToken},
+        contentType: 'application/json',
+        success: function(data) {
+          console.log('GET activity', data);
+          $('#select-native-1').val(data.activity.activityValue);
+        },
+        error: function(data) {
+          console.log('error', data);
+        }
+      });
+    });
   </script>
 </div>

@@ -1,7 +1,7 @@
 <div id="fitness-donut" data-role="page" data-theme="a" class="fitness-donut">
 <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-  <div data-role="header" data-theme = "b" data-add-back-btn="true">
+  <div data-role="header" data-theme = "b">
     <h1>Fatman</h1>
     <!-- <a class="back-bn ui-btn ui-btn-left ui-nodisc-icon ui-btn-icon-notext ui-icon-back" >Back</a> -->
     <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
@@ -38,7 +38,7 @@
             contentType: 'application/json',
             success: function(data) {
               console.log(data);
-              $("#user-rating").append("<span>" + data.rating + "</span>");
+              $("#user-rating").empty().append("<span>Rating: " + data.rating + "</span>");
             }
           });
         });
@@ -57,12 +57,13 @@
                   dataset[0].value = 100 / data.beers.drank;
                   dataset[1].value = 100 / data.exercise.miles;
 
-                  $("#user-height").append("<span>" + data.height.feet + " " + data.height.inches + " " + "</span>");
-                  $("#user-weight").append("<span>" + data.weight + "</span>");
-                  $("#user-age").append("<span>" + data.age + "</span>");
-                  $("#user-activity").append("<span>" + data.activity.activityLevel + "</span>");
-                  $(".miles-text").text("Miles: " + data.exercise.miles);
-                  $(".beer-text").text("Beers: " + data.beers.drank);
+                  $("#user-height").empty().append("<span>Height: " + data.height.feet + " " + data.height.inches + " " + "</span>");
+                  $("#user-weight").empty().append("<span>Weight: " + data.weight + "</span>");
+                  $("#user-age").empty().append("<span>Age: " + data.age + "</span>");
+                  $("#user-activity").empty().append("<span>Activity: " + data.activity.activityLevel + "</span>");
+                  $("#user-rating").empty().append("<span>Rating: " + data.rating + "</span>");
+                  $(".miles-text").empty().text("Miles: " + data.exercise.miles);
+                  $(".beer-text").empty().text("Beers: " + data.beers.drank);
                   drawChart();
               },
               error: function(data) {
