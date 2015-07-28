@@ -11,10 +11,10 @@ module.exports = function(app, passport) {
       if (err) return res.status(500).send('server error');
       if (user) return res.status(500).send('cannot create that user');
 
-      var regSpecial = /[a-z A-Z 0-9]{6, 32}$/;
-      if (!regSpecial.test(req.body.password)) {
-        return res.status(500).send('bad password');
-      }
+      // var regSpecial = /[a-z A-Z 0-9]{6, 32}$/;
+      // if (!regSpecial.test(req.body.password)) {
+      //   return res.status(500).send('bad password');
+      // }
 
       if(!req.body.email) return res.status(500).send({msg: 'must pick a user/email'});
 
