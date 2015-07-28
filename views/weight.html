@@ -26,8 +26,7 @@
           contentType: 'application/json',
           success: function(data) {
             console.log('GET height', data);
-            $('#height-feet').val(data.height.feet);
-            $('#height-inches').val(data.height.inches);
+            $('#weight-lbs').val(data.weight);
           },
           error: function(data) {
             console.log('error', data);

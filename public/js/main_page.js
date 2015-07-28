@@ -28,6 +28,8 @@ $(document).ready(function() {
 
     $("#run-content").on("click", function(e) {
         e.preventDefault();
+        accessToken = window.sessionStorage.jwt;
+
         $.ajax({
             method: 'GET',
             url: '/user',
@@ -52,6 +54,8 @@ $(document).ready(function() {
 
     $("#drink-content").on("click", function(e) {
         e.preventDefault();
+        accessToken = window.sessionStorage.jwt;
+
         $.ajax({
             method: 'GET',
             url: '/user',
@@ -75,19 +79,20 @@ $(document).ready(function() {
     });
     $("#intro-btn").on("click", function(e) {
         e.preventDefault();
+        var user = {};
         var male = $("#checkbox-v-2a").is(':checked');
         var female = $("#checkbox-v-2b").is(':checked');
 
         if ((male && !female) || (!male && female)) { //male xor female
             if (male) {
-                currentUser.sex = "male";
+                user.sex = "male";
             } else {
-                currentUser.sex = "female";
+                user.sex = "female";
             }
             $.ajax({
                 url: '/user/sex',
                 type: 'PUT',
-                data: JSON.stringify(currentUser),
+                data: JSON.stringify(user),
                 headers: {
                     'jwt': accessToken
                 },
@@ -115,13 +120,11 @@ $(document).ready(function() {
             feet: feet.toString(),
             inches: inches.toString()
         };
-        currentUser.feet = height.feet;
-        currentUser.inches = height.inches;
 
         $.ajax({
             url: '/user/height',
             type: 'PUT',
-            data: JSON.stringify(currentUser),
+            data: JSON.stringify(height),
             headers: {
                 'jwt': accessToken
             },
@@ -138,12 +141,14 @@ $(document).ready(function() {
 
     $("#weight-btn").on("click", function(e) {
         e.preventDefault();
-        currentUser.weight = $("#weight-lbs").val();
+        var weight = {
+            weight: $("#weight-lbs").val()
+        };
 
         $.ajax({
             url: '/user/weight',
             type: 'PUT',
-            data: JSON.stringify(currentUser),
+            data: JSON.stringify(weight.weight),
             headers: {
                 'jwt': accessToken
             },
@@ -160,17 +165,18 @@ $(document).ready(function() {
 
     $("#birthday-btn").on("click", function(e) {
         e.preventDefault();
+        var birthday = {};
         var day = $("#birthday-day").val();
         var month = $("#birthday-month").val();
         var year = $("#birthday-year").val();
         var date = day.toString() + " " + month.toString() + " " + year.toString();
 
-        currentUser.date_of_birth = date;
+        birthday.date_of_birth = date;
 
         $.ajax({
             url: '/user/age',
             type: 'PUT',
-            data: JSON.stringify(currentUser),
+            data: JSON.stringify(birthday),
             headers: {
                 'jwt': accessToken
             },
@@ -192,13 +198,10 @@ $(document).ready(function() {
             activityLevel: $("#select-native-1").children(":selected").attr('name')
         };
 
-        currentUser.activityValue = activity.activityValue;
-        currentUser.activityLevel = activity.activityLevel;
-
         $.ajax({
             url: '/user/activity',
             type: 'PUT',
-            data: JSON.stringify(currentUser),
+            data: JSON.stringify(activity),
             headers: {
                 'jwt': accessToken
             },
@@ -220,9 +223,6 @@ $(document).ready(function() {
             minutes: $("#run-minutes").val() || 0
         };
 
-        // currentUser.hours = $("#run-hours").val() || 1;
-        // currentUser.minutes = $("#run-minutes").val() || 0;
-
         $.ajax({
             url: '/user/exercise',
             type: 'PUT',
@@ -243,12 +243,13 @@ $(document).ready(function() {
 
     $("#beer-btn").on("click", function(e) {
         e.preventDefault();
-        currentUser.beers = $("#beers-drank").val();
+        var beerUser = {};
+        beerUser.beers = $("#beers-drank").val();
 
         $.ajax({
             url: '/user/beers',
             type: 'PUT',
-            data: JSON.stringify(currentUser),
+            data: JSON.stringify(beerUser),
             headers: {
                 'jwt': accessToken
             },

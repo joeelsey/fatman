@@ -48,7 +48,7 @@
             },
             contentType: 'application/json',
             success: function(data) {
-                console.log(data);
+                console.log('put data', data);
                 $("#user-rating").empty().append("<span>Rating: " + data.rating + "</span>");
             }
         });
