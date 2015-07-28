@@ -1,4 +1,4 @@
-$(function(){
+$(function() {
       $(".button").on("click", function() {
 
       var $button = $(this);

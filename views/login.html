@@ -1,20 +1,21 @@
-<div id = "login-page" data-role="page" data-theme = "a">
-	<div data-role="header" data-theme = "b">
-		<h1>Fatman</h1>
-		<a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars" >Menu</a>
-	</div><!-- /header -->
-
-	<div id = "login-content" role="main" class="ui-content">
-
-		<img src="img/logo.png" id = "logo">
-    <form>
-      <input id="username" type="text" placeholder="email"></input>
-      <input id="password" type="password" placeholder="password"></input>
-      <button id="login-button" type="submit">Sign In</button>
-    </form>
-    
-    <button id="create-account" type="submit">Create an Account</button>
-		<!-- <button disabled="" id = "fb-loging-btn">Login with Facebook</button> -->
-
-	</div><!-- /content -->
-</div><!-- /page -->
+<div id="login-page" data-role="page" data-theme="a">
+    <div data-role="header" data-theme="b">
+        <button class="signout-button">Sign Out</button>
+        <h1>Fatman</h1>
+        <a href="#menu-panel" class="ui-btn ui-btn-right ui-nodisc-icon ui-btn-icon-notext ui-icon-bars">Menu</a>
+    </div>
+    <!-- /header -->
+    <div id="login-content" role="main" class="ui-content">
+        <img src="img/logo.png" id="logo">
+        <div id="#success-message"></div>
+        <div id="#error-message"></div>
+        <form>
+            <input id="username" type="text" placeholder="email address please"></input>
+            <input id="password" type="password" placeholder="password must be at least six characters with one number"></input>
+            <button id="login-button" type="submit">Sign In</button>
+        </form>
+        <button id="create-account" type="submit">Create an Account</button>
+    </div>
+    <!-- /content -->
+</div>
+<!-- /page -->
