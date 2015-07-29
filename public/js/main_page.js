@@ -1,7 +1,6 @@
 $(document).ready(function() {
     var currentUser;
     var accessToken = window.sessionStorage.jwt;
-    console.log('accessToken', accessToken);
     
     if (accessToken) {
         $.mobile.changePage('#main-page', {

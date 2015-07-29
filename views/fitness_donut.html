@@ -59,7 +59,6 @@
                 'jwt': accessToken
             },
             contentType: 'application/json',
-            async: false,
             success: function(data) {
                 console.log('d3: ', data);
                 dataset[0].count = data.beers.drank;
@@ -90,7 +89,6 @@
                 'jwt': accessToken
             },
             contentType: 'application/json',
-            async: false,
             success: function(data) {
                 console.log('d3: ', data);
                 dataset[0].count = data.beers.drank;
