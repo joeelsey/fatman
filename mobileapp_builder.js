@@ -8,7 +8,7 @@ var locals = {};
 var outputDirr = __dirname + '/cordova_app/www';
 var assetsRootFolder = __dirname + '/public/';
 var assetsFolders = ["img", "js", "css"];
-var excludeFilesAndFolders = ["admin", ".DS_Store"]
+var excludeFilesAndFolders = ["admin", ".DS_Store"];
 
 
 function createOutputFolder(callback){

@@ -3,9 +3,7 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
-// var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 
@@ -39,19 +37,14 @@ require('./routes/index.js')(app, jwtauth);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-
-// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type, Authorization");
+  res.setHeader("Access-Control-Allow-Methods", 'GET, POST, PUT');
   next();
  });
-
 app.use('/admin', admin);
 
 app.get('/sign_s3', function(req, res, next){
