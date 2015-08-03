@@ -18,7 +18,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(data) {
                 console.log(data);
-                window.sessionStorage.jwt = data.jwt;
+                window.localStorage.jwt = data.jwt;
                 $("#success-message").empty().append("<span>Login success!</span>");
                 $.mobile.changePage('#main-page', {
                     transition: 'slide',
@@ -46,7 +46,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(data) {
                 console.log(data);
-                window.sessionStorage.jwt = data.jwt;
+                window.localStorage.jwt = data.jwt;
                 $("#success-message").empty().append("<span>Login success!</span>");
                 $.mobile.changePage('#main-page', {
                     transition: 'slide',

@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var currentUser;
-    var accessToken = window.sessionStorage.jwt;
+    var accessToken = window.localStorage.jwt;
     
     if (accessToken) {
         $.mobile.changePage('#main-page', {
@@ -18,7 +18,7 @@ $(document).ready(function() {
         e.preventDefault();
         console.log('sign out');
 
-        window.sessionStorage.removeItem('jwt');
+        window.localStorage.removeItem('jwt');
 
         $.mobile.changePage('#login-page', {
             transition: 'slide',
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     $("#run-content").on("click", function(e) {
         e.preventDefault();
-        accessToken = window.sessionStorage.jwt;
+        accessToken = window.localStorage.jwt;
 
         $.ajax({
             method: 'GET',
@@ -54,7 +54,7 @@ $(document).ready(function() {
 
     $("#drink-content").on("click", function(e) {
         e.preventDefault();
-        accessToken = window.sessionStorage.jwt;
+        accessToken = window.localStorage.jwt;
 
         $.ajax({
             method: 'GET',
