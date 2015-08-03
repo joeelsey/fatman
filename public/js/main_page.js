@@ -148,7 +148,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/user/weight',
             type: 'PUT',
-            data: JSON.stringify(weight.weight),
+            data: JSON.stringify(weight),
             headers: {
                 'jwt': accessToken
             },
