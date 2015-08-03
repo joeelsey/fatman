@@ -4,9 +4,9 @@ var app = express();
 var Coupon = require('../models/coupon');
 
 
-router.get('/', function(req, res, next) {
-  res.render('admin', { title: 'Admin' });
-});
+// router.get('/', function(req, res, next) {
+//   res.render('admin', { title: 'Admin' });
+// });
 
 router.get('/coupons', function(req, res) {
   Coupon.find({}, function(err, coupons){

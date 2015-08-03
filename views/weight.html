@@ -23,9 +23,7 @@
           method: 'GET',
           url: '/user',
           dataType: 'json',
-          beforeSend: function(xhr) {
-                xhr.setRequestHeader("jwt", accessToken);
-            },
+          headers: {'jwt', accessToken},
           contentType: 'application/json',
           success: function(data) {
             console.log('GET height', data);

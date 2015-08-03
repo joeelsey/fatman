@@ -2,9 +2,9 @@ var User = require('../models/user');
 var moment = require('moment');
 
 module.exports = function(app, jwtauth) {
-  // app.get('/', function(req, res) {
-  //   res.render('index', {title: 'Express'});
-  // });
+  app.get('/', function(req, res) {
+    res.render('index', {title: 'Express'});
+  });
 
   app.get('/home', function(req, res) {
     res.send('home', {msg: 'home page'});
