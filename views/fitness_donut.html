@@ -55,6 +55,7 @@
         $.ajax({
             url: '/user',
             method: 'GET',
+            dataType: 'json',
             headers: {
                 'jwt': accessToken
             },
